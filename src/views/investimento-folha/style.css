@@ -1,0 +1,172 @@
+#botaoFolha {
+    background: #AB0045;
+    font-weight: bold;
+    width: 180px;
+    color: #FFFFFF;
+}
+
+#botaoInstrutor {
+    background: #FFB600;
+    font-weight: bold;
+    width: 180px;
+    margin-left: 10px;
+    color: #FFFFFF;
+}
+
+
+#botaoSalarioPadrao {
+    background: #AB0045;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-left: 0%;
+    border: none;
+}
+
+#botaoAdicionarManualmente {
+    background: #FFB700;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-left: 120px;
+    border: none;
+}
+
+.ultima {
+    background: #63657A !important;
+    color: #FFFFFF;
+}
+
+.forte {
+    font-weight: bold;
+}
+
+#modalinteiro {
+    background-color: #EBEBEB;
+}
+
+.scrollbar {
+margin-left: 30px;
+margin: auto;
+width: 100%;
+overflow-y: scroll;
+}
+
+.force-overflow {
+min-height: 450px;
+}
+
+.scrollbar-primary::-webkit-scrollbar {
+width: 12px;
+background-color: grey; 
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background-color: grey; 
+}
+
+.info-nome {
+    font-weight: bold;
+}
+
+.scrollbar-primary {
+scrollbar-color: #F5F5F5;
+}
+
+.botao {
+    padding-bottom: 2%;
+}
+
+#formação {
+    width: 180px;
+    margin-right: 23px;
+    margin-bottom: 50px;
+    margin-left: 0px;
+}
+
+#turmas {
+    width: 190px;
+}
+
+.invisivel {
+	display: none;
+}
+
+
+#investimentoFolha {
+    width: 100%;
+}
+
+#modalconteudo {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.conteudodescrição {
+    margin-bottom: 40px;
+}
+
+#exampleModalLabel {
+    font-family: Montserrat;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+
+
+#confirmar {
+    background: #AB0045;
+    font-weight: bold;
+    margin-top: 12px;
+    width: 100%;
+    border: none;
+}
+ 
+
+@media  (max-width: 1400px) {
+    #botaoFolha {
+        width: 100%;
+    }
+    #botaoInstrutor {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 10px;
+
+    }
+
+    #formação, #turmas {
+        width: auto;
+    }
+
+    #botaoSalarioPadrao {
+        width: max-content;
+                
+    }
+    
+    #botaoAdicionarManualmente {
+        width: max-content;
+        margin-left: 0px;
+    }
+
+  }
+
+  @media  (max-width: 1200px) {
+    .modalitens, .botõesfinais {
+        width: auto;
+    }
+    .conteudodescrição {
+        width: 100%;
+    }
+  }
