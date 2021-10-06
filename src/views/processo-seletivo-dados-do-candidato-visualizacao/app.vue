@@ -1,6 +1,6 @@
 <template>
         <main>
-            <header />
+            <Header />
             <div class="container-fluid" >
                 <div class="row mt-5 justify-content-evenly">
                     <div class="div-titulo col-lg-4">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="curriculoCandidato" class="form-label mb-0 titulo">Currículo candidato</label><br>
-                                <a href=""><img src="../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
+                                <a href=""><img src="../../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
                                 
                             </div>
                             <div class="mb-3">
@@ -72,5 +72,74 @@
 </template>
 
 <script>
-m
+import Header from '@/components/Header.vue'
+
+export default {
+    name: 'App',
+    components: {
+        Header
+    },
+    data () {
+        return{
+            candidato: {
+                "id": 1,
+                "nome": "Gustavo de Oliveira Juliano",
+                "contato":"(14)99706-2197",
+                "fonteRecrutamento":"Palestra via Faculdade",
+                "dataAgendamento":"31/10/2021",
+                "curso":"Análise e Desenvolvimento de Sistemas",
+                "status":"APROVADO_1_FASE",
+                "provaPratica":"10/10",
+                "disc":"D:10 I:10 S:10 C:10",
+                "observacoes":"Observações feitas através do Vue"
+            }
+        }
+    }
+}
 </script>
+
+<style>
+
+.titulo{
+    color: #090B2E;
+    font-weight: bold;
+}
+
+#disabledTextInput{
+    background-color: #D3CACA;
+    border: 1px solid #BCB3B3;
+}
+
+.aprovado::placeholder{
+    color: #19B200 !important; 
+}
+
+.reprovado::placeholder{
+    color: red !important;
+}
+
+.standby::placeholder{
+    color: blue !important;
+}
+
+textarea{
+    resize: none !important;
+}
+
+.download{
+    transform: rotate(180deg) !important;
+}
+
+.subtitulo{
+    color: #090B2E;
+    font-weight: bold;
+    font-size: large;
+}
+
+@media screen and (min-width: 992px) {
+    .empty{
+        height: 200px;
+    }
+  }
+
+</style>
