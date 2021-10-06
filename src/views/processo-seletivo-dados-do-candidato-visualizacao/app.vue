@@ -1,37 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='utf-8'>
-        <title>Dados do candidato</title>
-        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
-        <link rel="stylesheet" href="../assets/css/stylepadrao.css">
-        <link rel='stylesheet' type='text/css' href='style.css'>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-        <script src='main.js'></script>
-    </head>
-    <body onLoad="onLoad()">
-        <header>
-            <div class="header"> 
-                    <a href=""> <div class="home btn-header">
-                        <img src="../assets/imgs/home_white_24dp.svg">
-                    </div> </a> 
-
-                    <div class="logo"> 
-                        <img src="../assets/imgs/LOGO_SIS_2.png">
-                    </div>
-
-                    <a href="">
-                    <div class="rollback btn-header"> 
-                        <img src="../assets/imgs/arrow_back_white_24dp.svg">
-                    </div> </a>
-            </div>
-        </header>
-
+<template>
         <main>
+            <Header />
             <div class="container-fluid" >
                 <div class="row mt-5 justify-content-evenly">
                     <div class="div-titulo col-lg-4">
@@ -86,7 +55,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="curriculoCandidato" class="form-label mb-0 titulo">Currículo candidato</label><br>
-                                <a href=""><img src="../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
+                                <a href=""><img src="../../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
                                 
                             </div>
                             <div class="mb-3">
@@ -100,8 +69,77 @@
                 </div>
             </div>
         </main>
-        <script src="js/script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    </body>
-</html>
+</template>
+
+<script>
+import Header from '@/components/Header.vue'
+
+export default {
+    name: 'App',
+    components: {
+        Header
+    },
+    data () {
+        return{
+            candidato: {
+                "id": 1,
+                "nome": "Gustavo de Oliveira Juliano",
+                "contato":"(14)99706-2197",
+                "fonteRecrutamento":"Palestra via Faculdade",
+                "dataAgendamento":"31/10/2021",
+                "curso":"Análise e Desenvolvimento de Sistemas",
+                "status":"APROVADO_1_FASE",
+                "provaPratica":"10/10",
+                "disc":"D:10 I:10 S:10 C:10",
+                "observacoes":"Observações feitas através do Vue"
+            }
+        }
+    }
+}
+</script>
+
+<style>
+
+.titulo{
+    color: #090B2E;
+    font-weight: bold;
+}
+
+#disabledTextInput{
+    background-color: #D3CACA;
+    border: 1px solid #BCB3B3;
+}
+
+.aprovado::placeholder{
+    color: #19B200 !important; 
+}
+
+.reprovado::placeholder{
+    color: red !important;
+}
+
+.standby::placeholder{
+    color: blue !important;
+}
+
+textarea{
+    resize: none !important;
+}
+
+.download{
+    transform: rotate(180deg) !important;
+}
+
+.subtitulo{
+    color: #090B2E;
+    font-weight: bold;
+    font-size: large;
+}
+
+@media screen and (min-width: 992px) {
+    .empty{
+        height: 200px;
+    }
+  }
+
+</style>
