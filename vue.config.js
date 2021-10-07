@@ -33,7 +33,7 @@ module.exports= {
         'processo-seletivo-dados-da-vaga-visualizacao': {
             entry: './src/views/processo-seletivo-dados-da-vaga-visualizacao/main.js',
             template: 'public/index.html',
-            title: 'Dados da vaga - visualizacao',
+            title: 'Dados da Vaga - Visualização',
             chunks: ['chunk-vendors', 'chunck-common', 'processo-seletivo-dados-da-vaga-visualizacao']
         },
         'processo-seletivo-dados-do-candidato-cadastro-edicao': {
