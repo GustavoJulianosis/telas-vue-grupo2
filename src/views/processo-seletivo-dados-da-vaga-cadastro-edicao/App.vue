@@ -192,126 +192,129 @@ export default {
   components: {
     Header,
   },
-  data (){
-    return{
+  data() {
+    return {
       formacao: [
         {
           id: 1,
-          turma: 'Java - Turma 1 - 2021'
+          turma: "Java - Turma 1 - 2021",
         },
         {
-          id:2,
-          turma: 'MainFrame - Turma 1 - 2021'
+          id: 2,
+          turma: "MainFrame - Turma 1 - 2021",
         },
         {
-          id:3,
-          turma: 'BI - Turma 1 - 2021'
-        }
-      ]
-    }
+          id: 3,
+          turma: "BI - Turma 1 - 2021",
+        },
+      ],
+    };
   },
-  methods:{}
+  methods: {},
 };
 </script>
 
+
 <style>
-.titulo{
-    color: #090B2E;
-    font-weight: bold;
+.titulo {
+  color: #090b2e;
+  font-weight: bold;
 }
 
-#disabledTextInput{
-    background-color: #D3CACA;
-    border: 1px solid #BCB3B3;
+#disabledTextInput {
+  background-color: #d3caca;
+  border: 1px solid #bcb3b3;
 }
 
-.aprovado::placeholder{
-    color: #19B200 !important; 
+.aprovado::placeholder {
+  color: #19b200 !important;
 }
 
-textarea{
-    resize: none !important;
+textarea {
+  resize: none !important;
 }
 
-.download{
-    transform: rotate(180deg) !important;
+.download {
+  transform: rotate(180deg) !important;
 }
 
-.subtitulo{
-    color: #090B2E;
-    font-weight: bold;
-    font-size: large;
+.subtitulo {
+  color: #090b2e;
+  font-weight: bold;
+  font-size: large;
 }
 
-.btn-confirmar{
-    background-color: #AB0045 !important;
-    font-weight: bold !important;
-    color: #fff !important;
-    width: 100%;
+.btn-confirmar {
+  background-color: #ab0045 !important;
+  font-weight: bold !important;
+  color: #fff !important;
+  width: 100%;
 }
 
-.btn-cancelar{
-    background-color: #FFB700 !important;
-    font-weight: bold !important;
-    color: #fff !important;
-    width: 100%;
+.btn-cancelar {
+  background-color: #ffb700 !important;
+  font-weight: bold !important;
+  color: #fff !important;
+  width: 100%;
 }
 
 @media screen and (min-width: 992px) {
-    .empty{
-        height: 200px;
-    }
+  .empty {
+    height: 200px;
   }
+}
 
 /*Modal*/
-.modal-body, .modal-header, .modal-footer {
-    text-align: center;
-    background-color: #EBEBEB
+.modal-body,
+.modal-header,
+.modal-footer {
+  text-align: center;
+  background-color: #ebebeb;
 }
 
-.modal-body{
-    min-height: 55vh;
-    flex-direction: column;
+.modal-body {
+  min-height: 55vh;
+  flex-direction: column;
 }
 
-.submit, .cancel{
-    color: white !important;
-    font-weight: bold !important;
-    border-radius: 5px !important;
-    width: 350px;
-    height: 50px;
-    font-size: 25px !important;
+.submit,
+.cancel {
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 5px !important;
+  width: 350px;
+  height: 50px;
+  font-size: 25px !important;
 }
 
-.submit{
-    background-color: #AB0045 !important;
-
+.submit {
+  background-color: #ab0045 !important;
 }
 
-.cancel{
-    background-color: #FFB700 !important;
+.cancel {
+  background-color: #ffb700 !important;
 }
 
 .conteudomodal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
 }
 
 .conteudomodalCadastroEdicao {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 80px;
 }
 
-.alinharDiv{
-    text-align: start;
+.alinharDiv {
+  text-align: start;
 }
 
-.informacoes-modal{
-    color: #737373 !important;
-    font-size: 2rem;
+.informacoes-modal {
+  color: #737373 !important;
+  font-size: 2rem;
 }
 </style>
