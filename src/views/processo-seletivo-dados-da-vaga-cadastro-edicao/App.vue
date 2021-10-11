@@ -2,7 +2,7 @@
   <Header />
 
   <main>
-    <form class="container-fluid" action="" method="POST">
+    <div class="container-fluid">
       <div class="row justify-content-evenly">
         <h3 class="titulo col-xl-4 mt-5">Dados da vaga:</h3>
         <div class="col-xl-4"></div>
@@ -18,24 +18,23 @@
               class="form-control"
               list="turmas"
               placeholder="Digite uma turma de Formação"
+              v-model="modelFormacao"
             />
             <datalist id="turmas">
-              <option value="Java - Turma 1 - 2021"></option>
-              <option value="MainFrame - Turma 1 - 2021"></option>
-              <option value="BI - Turma 1 - 2021"></option>
+              <option v-for="formacao in formacoes" :key="formacao.turma" v-bind:value="formacao.turma"></option>
             </datalist>
           </div>
           <div>
             <label for="dataInicio" class="form-label mb-0 mt-3 titulo"
               >Data início</label
             >
-            <input type="date" name="dataInicio" class="form-control" />
+            <input type="date" name="dataInicio" class="form-control" v-model="modelDataIni"/>
           </div>
           <div>
             <label for="dataTermino" class="form-label mb-0 mt-3 titulo"
               >Data término</label
             >
-            <input type="date" name="dataTermino" class="form-control" />
+            <input type="date" name="dataTermino" class="form-control" v-model="modelDataFin"/>
           </div>
           <div>
             <label for="qtdEstagiarios" class="form-label mb-0 mt-3 titulo"
@@ -47,6 +46,9 @@
                 class="form-control"
                 placeholder="Número de estagiários"
                 name="qtdEstagiarios"
+                id="qtdEstagiarios"
+                @input="escutaQuantidades"
+                v-model="modelQtdEstagiarios"
               />
             </div>
           </div>
@@ -60,6 +62,9 @@
                 class="form-control"
                 placeholder="Número de trainees"
                 name="qtdTrainees"
+                id="qtdTrainees"
+                @input="escutaQuantidades"
+                v-model="modelQtdTrainees"
               />
             </div>
           </div>
@@ -75,6 +80,8 @@
                 class="form-control"
                 placeholder="Número de aprendizes"
                 name="qtdAprendizes"
+                id="qtdAprendizes" @input="escutaQuantidades"
+                v-model="modelQtdAprendizes"
               />
             </div>
           </div>
@@ -87,8 +94,10 @@
                 name="qtdTotal"
                 type="text"
                 class="form-control"
-                id="disabledTextInput"
+                id="qtdTotal"
                 placeholder="Quantidade total"
+                disabled readonly
+                v-model="modelQtdTotal"
               />
             </div>
           </fieldset>
@@ -103,6 +112,7 @@
               class="btn-confirmar btn"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
+              @click.prevent="enviarDados"
             >
               CONFIRMAR
             </button>
@@ -111,7 +121,7 @@
         <div class="col-xl-4"></div>
         <div class="col-xl-2"></div>
       </div>
-    </form>
+    </div>
   </main>
 
   <!-- modal -->
@@ -142,29 +152,29 @@
             <div class="row">
               <div class="col">
                 <div class="alinharDiv">
-                  <span class="informacoes-modal">Formação</span>
+                  <span class="informacoes-modal">Formação: {{ informacoes.formacao }}</span>
                 </div>
                 <div class="alinharDiv">
-                  <span class="informacoes-modal">Data início</span>
+                  <span class="informacoes-modal">Data início: {{ informacoes.dataIni }} </span>
                 </div>
                 <div class="alinharDiv">
-                  <span class="informacoes-modal">Data término</span>
-                </div>
-                <div class="alinharDiv">
-                  <span class="informacoes-modal"
-                    >Quantidade de estagiários</span
-                  >
-                </div>
-                <div class="alinharDiv">
-                  <span class="informacoes-modal">Quantidade de trainees</span>
+                  <span class="informacoes-modal">Data término: {{ informacoes.dataFin }}</span>
                 </div>
                 <div class="alinharDiv">
                   <span class="informacoes-modal"
-                    >Quantidade de aprendizes</span
+                    >Quantidade de estagiários: {{ informacoes.qtdEstagiario }}</span
                   >
                 </div>
                 <div class="alinharDiv">
-                  <span class="informacoes-modal">Participantes totais</span>
+                  <span class="informacoes-modal">Quantidade de trainees: {{ informacoes.qtdTrainee }}</span>
+                </div>
+                <div class="alinharDiv">
+                  <span class="informacoes-modal"
+                    >Quantidade de aprendizes: {{ informacoes.qtdAprendiz }}</span
+                  >
+                </div>
+                <div class="alinharDiv">
+                  <span class="informacoes-modal">Participantes totais: {{ informacoes.qtdTotal }}</span>
                 </div>
               </div>
             </div>
@@ -194,7 +204,7 @@ export default {
   },
   data() {
     return {
-      formacao: [
+      formacoes: [
         {
           id: 1,
           turma: "Java - Turma 1 - 2021",
@@ -208,10 +218,60 @@ export default {
           turma: "BI - Turma 1 - 2021",
         },
       ],
+      informacoes: {
+        formacao: '',
+        dataIni: '',
+        dataFin: '',
+        qtdEstagiario: '',
+        qtdAprendiz: '',
+        qtdTrainee: '',
+        qtdTotal: ''
+      }
     };
   },
-  methods: {},
-};
+  methods: {
+    escutaQuantidades () {
+      let qtdAprendizes = document.querySelector('#qtdAprendizes').value
+      let qtdEstagiarios = document.querySelector('#qtdEstagiarios').value
+      let qtdTrainees = document.querySelector('#qtdTrainees').value
+      this.carregaQuantidade(qtdEstagiarios, qtdTrainees, qtdAprendizes)
+    },
+    carregaQuantidade (qtdE, qtdT, qtdA) {
+    qtdA = parseInt(qtdA)
+    qtdT = parseInt(qtdT)
+    qtdE = parseInt(qtdE)
+
+    if (isNaN(qtdE)) {
+      qtdE = 0
+    }
+    if (isNaN(qtdT)) {
+      qtdT = 0
+    }
+    if (isNaN(qtdA)) {
+      qtdA = 0
+    }
+
+    let qtdTotal = 0
+    qtdTotal += qtdE + qtdT + qtdA
+    let elQtdTotal = document.querySelector('#qtdTotal')
+    elQtdTotal.value = qtdTotal
+  },
+  enviarDados(){
+    this.informacoes.formacao = this.modelFormacao;
+    this.informacoes.dataIni = formataDataParaExibicao(this.modelDataIni);
+    this.informacoes.dataFin = formataDataParaExibicao(this.modelDataFin);
+    this.informacoes.qtdEstagiario = this.modelQtdEstagiarios;
+    this.informacoes.qtdAprendiz = this.modelQtdAprendizes;
+    this.informacoes.qtdTrainee = this.modelQtdTrainees;
+    this.informacoes.qtdTotal = document.querySelector('#qtdTotal').value;
+  }
+  }
+}
+function formataDataParaExibicao (data) {
+  const dataPreForm = new Date(data)
+  const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
+  return dataFormatada
+  }
 </script>
 
 
@@ -315,6 +375,6 @@ textarea {
 
 .informacoes-modal {
   color: #737373 !important;
-  font-size: 2rem;
+  font-size: 1.25rem;
 }
 </style>

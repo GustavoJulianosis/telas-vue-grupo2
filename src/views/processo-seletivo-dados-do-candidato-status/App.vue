@@ -16,6 +16,7 @@
               class="form-control"
               type="text"
               placeholder="10/10"
+              v-model="modelTesteLogico"
             />
           </div>
           <div class="mt-1">
@@ -25,7 +26,16 @@
               name="disc"
               class="form-control"
               placeholder="D:10 I:9 S:9 C:7"
+              v-model="modelDisc"
             />
+          </div>
+          <div class="mt-4">
+            <label class="form-label titulo mb-0">Resultado 1ª fase</label>
+            <select class="form-select" v-model="modelResultado1">
+              <option selected value="SEM_STATUS">Sem status</option>
+              <option value="APROVADO_1_FASE" class="aprovado">Aprovado 1ª fase</option>
+              <option value="REPROVADO_1_FASE" class="reprovado">Reprovado 1ª fase</option>
+            </select>
           </div>
         </div>
         <div class="col-lg-4">
@@ -40,46 +50,21 @@
               rows="5"
               class="form-control"
               placeholder="Considerações..."
+              v-model="modelEntrevistaPessoal"
             ></textarea>
+          </div>
+          <div class="mt-4">
+            <label class="form-label titulo mb-0">Resultado 2ª fase</label>
+            <select class="form-select" v-model="modelResultado2" required>
+              <option value="SEM_STATUS">Sem status</option>
+              <option value="APROVADO_2_FASE" class="aprovado">Aprovado 2ª fase</option>
+              <option value="REPROVADO_2_FASE" class="reprovado">Reprovado 2ª fase</option>
+              <option value="STANDBY" class="standby">Stand By</option>
+            </select>
           </div>
         </div>
       </div>
       <div class="row empty"></div>
-      <div class="row justify-content-center mb-3">
-        <div class="col-4 col-md-auto">
-          <input
-            type="radio"
-            name="aprovadoRadio"
-            class="form-check-input"
-            id="radioAprovado"
-          />
-          <label for="aprovadoRadio" class="form-check-label titulo mb-0"
-            >Aprovado</label
-          >
-        </div>
-        <div class="col-4 col-md-auto">
-          <input
-            type="radio"
-            name="aprovadoRadio"
-            class="form-check-input"
-            id="radioReprovado"
-          />
-          <label for="aprovadoRadio" class="form-check-label titulo mb-0"
-            >Reprovado</label
-          >
-        </div>
-        <div class="col-4 col-md-auto">
-          <input
-            type="radio"
-            name="aprovadoRadio"
-            class="form-check-input"
-            id="radioStandby"
-          />
-          <label for="aprovadoRadio" class="form-check-label titulo mb-0"
-            >StandBy</label
-          >
-        </div>
-      </div>
       <div class="row justify-content-center">
         <div class="col-lg-4">
           <button
@@ -87,6 +72,7 @@
             class="btn-confirmar btn"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            @click.prevent="enviarDados"
           >
             CONFIRMAR
           </button>
@@ -115,9 +101,10 @@
         </div>
         <div class="modal-body d-flex justify-content-between">
           <div>
-            <h1 class="modal-title form-label fw-bold mb-0 titulo">
-              Deseja {{ status }} o seguinte participante?
-            </h1>
+            <h1 v-if="informacoes.resultado1 == 'APROVADO_1_FASE' & informacoes.resultado2 == 'APROVADO_2_FASE'">Deseja aprovar na 2ª fase o seguinte participante?</h1>
+            <h1 v-if="informacoes.resultado1 == 'REPROVADO_1_FASE' || informacoes.resultado2 == 'REPROVADO_2_FASE'">Deseja reprovar o seguinte participante?</h1>
+            <h1 v-if="informacoes.resultado1 == 'APROVADO_1_FASE' & informacoes.resultado2 == 'STANDBY'">Deseja definir para standby o seguinte participante?</h1>
+            <h1 v-if="informacoes.resultado1 == 'APROVADO_1_FASE' & informacoes.resultado2 == 'SEM_STATUS'">Deseja aprovar na 1ª fase o seguinte participante?</h1>
           </div>
           <div class="conteudomodal">
             <h3 class="informacoes-modal">{{ candidato.nome }}</h3>
@@ -152,8 +139,24 @@ export default {
         id: "1",
         nome: "Gustavo de Oliveira Juliano",
       },
+      informacoes: {
+        testeLogico: '',
+        disc: '',
+        resultado1: '',
+        entrevistaPessoal: '',
+        resultado2: ''
+      }
     };
   },
+  methods: {
+    enviarDados(){
+      this.informacoes.testeLogico = this.modeltesteLogico
+      this.informacoes.disc = this.modelDisc
+      this.informacoes.resultado1 = this.modelResultado1
+      this.informacoes.entrevistaPessoal = this.modelEntrevistaPessoal
+      this.informacoes.resultado2 = this.modelResultado2
+    }
+  }
 };
 </script>
 
@@ -168,8 +171,16 @@ export default {
     border: 1px solid #BCB3B3;
 }
 
-.aprovado::placeholder{
+.aprovado{
     color: #19B200 !important; 
+}
+
+.reprovado{
+    color: red !important;
+}
+
+.standby{
+    color: blue !important;
 }
 
 textarea{
@@ -202,7 +213,7 @@ textarea{
 
 @media screen and (min-width: 992px) {
     .empty{
-        height: 200px;
+        height: 150px;
     }
   }
 
