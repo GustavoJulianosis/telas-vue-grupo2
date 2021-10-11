@@ -37,15 +37,11 @@
               RECARREGAR LISTA
             </button>
           </div>
-          <div class="search-table">
+          <div class="search-table table-wrapper-scroll-y my-custom-scrollbar">
             <!--  -->
             <table
               class="
-                table table-bordered
-                mb-10
-                table-wrapper-scroll-y
-                my-custom-scrollbar
-                scrollbar scrollbar-primary
+                table table-bordered 
               "
             >
               <tbody class="processosSeletivos">
@@ -58,7 +54,10 @@
                     {{ processo.id }}
                   </th>
                   <td class="info-nome">{{ processo.processo }}</td>
-                  <td>Em andamento</td>
+                  <td class="em-andamento" v-if="processo.status == 'EM_ANDAMENTO'">Em andamento</td>
+                  <td class="finalizado" v-if="processo.status == 'FINALIZADO'">
+                    Finalizado
+                  </td>
                   <td>
                     <a
                       href="http://localhost:8080/processo-seletivo-dados-da-vaga-visualizacao"
@@ -90,7 +89,7 @@
         <!-- Botão de cadastro de nova vaga -->
         <div class="col-xl-4">
           <button
-            class="button-footer mb-3 mt-3 submit"
+            class="button-footer mb-3 mt-5  submit"
             id="cadastrar"
             type="submit"
           >
@@ -116,40 +115,77 @@ export default {
         {
           id: 1,
           processo: "Processo Seletivo Java",
+          status: 'EM_ANDAMENTO'
         },
         {
           id: 2,
           processo: "Processo Seletivo Python",
+          status: 'FINALIZADO'
         },
         {
           id: 3,
           processo: "Processo Seletivo Spring",
+          status: 'FINALIZADO'
         },
         {
           id: 4,
           processo: "Processo Seletivo Mainframe",
+          status: 'FINALIZADO'
         },
         {
           id: 5,
           processo: "Processo Seletivo Mobile",
+          status: 'EM_ANDAMENTO'
         },
         {
           id: 6,
           processo: "Processo Seletivo JavaScript",
+          status: 'FINALIZADO'
         },
         {
           id: 7,
           processo: "Processo Seletivo React Native",
+          status: 'EM_ANDAMENTO'
         },
+        {
+          id: 8,
+          processo: "Processo Seletivo COBOL",
+          status: 'EM_ANDAMENTO'
+        },
+        {
+          id: 9,
+          processo: "Processo Seletivo React Native",
+          status: 'EM_ANDAMENTO'
+        },
+        {
+          id: 10,
+          processo: "Processo Seletivo React Native",
+          status: 'FINALIZADO'
+        },
+        {
+          id: 11,
+          processo: "Processo Seletivo React Native",
+          status: 'EM_ANDAMENTO'
+        },
+        {
+          id: 12,
+          processo: "Processo Seletivo React Native",
+          status: 'FINALIZADO'
+        },
+        {
+          id: 13,
+          processo: "Processo Seletivo React Native",
+          status: 'EM_ANDAMENTO'
+        }
       ],
     };
   },
   methods: {
-    filtraDados () {
+    filtraDados() {
       var aviso = document.querySelector(".aviso");
       aviso.classList.add("invisivel");
       var campoFiltro = document.querySelector("#filtrar-tabela");
-    
+
       var listaDeValores = [];
 
       console.log(campoFiltro.value);
@@ -228,78 +264,23 @@ body {
   background-color: var(--color-background-screen) !important;
 }
 
-.title h1 {
-  font-weight: 700;
-}
-
-.header {
-  background-color: var(--color-blue-principal);
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.scrollbar {
-  margin-left: 30px;
-  margin: auto;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-}
-.force-overflow {
-  min-height: 450px;
-}
-.scrollbar-primary::-webkit-scrollbar {
-  width: 12px;
-  background-color: grey;
-}
-.scrollbar-primary::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: grey;
-}
-.scrollbar-primary {
-  scrollbar-color: #f5f5f5;
-}
-
-.btn-header {
-  height: 75px;
-  width: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.disabled {
-  display: none;
-}
-
-.btn-header img,
-.logo img {
-  height: 50px;
-}
-
-.home.btn-header {
-  background-color: var(--color-yellow-principal);
-}
-
-.rollback.btn-header {
-  background-color: var(--color-magenta-principal);
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 1.5em;
-}
-
 /* Title */
 
 .container-fluid h1 {
   font-weight: 700;
   font-size: 30px;
+}
+
+/* Scroll */
+.my-custom-scrollbar {
+position: relative;
+height: 59vh;
+overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+display: block;
+height: 59vh;
 }
 
 /* Input de busca */
@@ -324,7 +305,6 @@ body {
 
 /* Table - Coluna em Andamento */
 .search-table tbody > tr > td:nth-child(3) {
-  color: var(--color-green-progress);
   text-align: center;
   font-weight: 700;
 }
@@ -359,6 +339,17 @@ body {
 .table {
   background-color: var(--color-white-default);
 }
+
+/* Status do Programa */
+
+.em-andamento {
+  color: var(--color-green-progress) !important;
+}
+
+.finalizado {
+  color: var(--color-red-progress) !important;
+}
+
 
 /* Button do rodapé */
 
@@ -408,7 +399,7 @@ body {
 }
 
 .recarregar {
-  background-color: #090b2e !important;
+  background-color: #090b2e;
   cursor: pointer !important;
   color: var(--color-white-default) !important;
   transition: all linear 0.3s !important;
@@ -418,9 +409,5 @@ body {
   background-color: #141863 !important;
 }
 
-@media screen and (min-width: 974px) {
-  .empty {
-    height: 120px;
-  }
-}
+
 </style>
