@@ -1,139 +1,211 @@
-a{
-    text-decoration: none !important;
+:root {
+  /* Cores principais - Botões e telas */
+  --color-background-screen: #ebebeb;
+  --color-yellow-principal: #ffb700;
+  --color-blue-principal: #090b2e;
+  --color-magenta-principal: #ab0045;
+  --color-background-form-input: #d3caca;
+
+  /* Cores da barra de progresso da busca de vagas */
+  --color-green-progress: #19b200;
+  --color-yellow-progress: yellow;
+  --color-red-progress: red;
+  --color-without-status-progress: gray;
+  --color-with-standby-progress: blue;
+
+  /* Cores de fonte */
+  --color-gray-font: #737373;
+
+  /* Cor de borda da tabela */
+  --color-border-table: #bcb3b3;
+
+  /* Cores default */
+  --color-white-default: #ffffff;
+  --color-black-default: #000000;
+  --color-gray-default: grey;
 }
 
-.tabela{
-    border: 1px solid #BCB3B3 !important;
-    background-color: white;
+/* Restart da página, removendo as bordas default do navegador */
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: var(--color-blue-principal);
+  text-decoration: none !important;
 }
 
-.titulo{
-    color: #090B2E;
-    width: 100%;
-    text-align: left;
+body {
+  background-color: var(--color-background-screen) !important;
+}
+/* Início do Header */
+
+.title h1 {
+  font-weight: 700;
+}
+
+.header {
+  background-color: var(--color-blue-principal);
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/*
+.scrollbar {
     margin-left: 30px;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+.force-overflow {
+    min-height: 450px;
+}
+.scrollbar-primary::-webkit-scrollbar {
+    width: 12px;
+    background-color: grey; 
+}
+.scrollbar-primary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: grey; 
+}
+.scrollbar-primary {
+    scrollbar-color: #F5F5F5;
+}
+*/
+
+.btn-header {
+  height: 75px;
+  width: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.botao{
-    background-color: #AB0045 !important;
-    border-style: none !important;
-    width: 26.9em !important;
-    border-radius: 2px !important;
+.disabled {
+  display: none;
 }
 
-.campo{
-    border-radius: 2px !important;
-    background-color: white !important;
-    color: #737373 !important;
+.btn-header img,
+.logo img {
+  height: 50px;
 }
 
-.th-id{
-    width: 2em !important;
+.home.btn-header {
+  background-color: var(--color-yellow-principal);
 }
 
-.th-ms{
-    width: 15em !important;
+.rollback.btn-header {
+  background-color: var(--color-magenta-principal);
 }
 
-.td-button{
-    width: 1.5em !important;
-    background-color: #FFB700 !important;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5em;
 }
 
-.nome-participante{
-    color: #737373;
-}
-.campo-tabela{
-    color: #737373 !important;
+/* Final do Header */
+/* ----------------------------------------------------------------------- */
+
+/* Main  */
+
+.tabela {
+  border: 1px solid var(--color-border-table) !important;
+  background-color: var(--color-white-default);
 }
 
-.submit, .cadastro{
-    color: white !important;
-    font-weight: bold !important;
-    border-radius: 5px !important;
+.botao {
+  background-color: var(--color-magenta-principal) !important;
+  border-style: none !important;
 }
 
-.submit{
-    background-color: #AB0045 !important;
-    height: 50px;
-    max-width: 450px !important;
-    text-align: center;
-    font-size: 23px !important;
+.campo {
+  background-color: var(--color-white-default) !important;
+  color: var(--color-gray-font) !important;
 }
 
-.cadastro{
-    background-color: #FFB700 !important;
-    height: 50px;
-    max-width: 450px !important;
-    text-align: center;
-    font-size: 23px !important;
+.submit,
+.cadastro {
+  color: var(--color-white-default) !important;
+  font-weight: bold !important;
+  text-align: center;
+  font-size: 23px !important;
 }
 
-.aprovado{
-    color: #19B200;
-    font-weight: bold;
-    font-size: 20px;
+.submit {
+  background-color: var(--color-magenta-principal) !important;
 }
 
-.reprovado{
-    color: red;
-    font-weight: bold;
-    font-size: 20px;
+.cadastro {
+  background-color: var(--color-yellow-principal) !important;
 }
 
-.sem-status{
-    font-size: 20px;
-    font-weight: bold;
-    color: gray;
+/* Início das Cores de Status do Participante */
 
-}
-.stand{
-    font-size: 20px;
-    font-weight: bold;
-    color: blue;
-}
-
-.imagem{
-  background-color:  #AB0045 !important;
+/* Estilo de fonte */
+.aprovado,
+.reprovado,
+.stand,
+.sem-status {
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.imagem-coluna{
-    background-color: #FFB700 !important;
+/* Aprovado - Verde */
+.aprovado {
+  color: var(--color-green-progress);
+}
+
+/* Reprovado - Vermelho */
+.reprovado {
+  color: var(--color-red-progress);
+}
+
+/* Em standby - Azul */
+.stand {
+  color: var(--color-with-standby-progress);
+}
+
+/* Sem status - Cinza */
+.sem-status {
+  color: var(--color-without-status-progress);
+}
+
+/* Final das Cores de Status do Participante */
+
+.first-button{
+  background-color: var(--color-magenta-principal) !important;
+}
+
+.second-button {
+  background-color: var(--color-yellow-principal) !important;
 }
 
 .my-custom-scrollbar {
-    position: relative;
-    height: 59vh;
-    overflow: auto;
+  position: relative;
+  height: 59vh;
+  overflow: auto;
 }
 
-.table-wrapper-scroll-y {
-    display: block;
-    height: 59vh;
+.invisivel {
+  display: none;
 }
 
-.invisivel{
-    display: none;
-}
-.numeros{
-    color: #737373;
-    font-size: 25px;
-}
-.processo{
-
-    color: grey;
-    
-}
-.tamanhoCampo{
-    width: 40%;
-    height: 24px;
-    font-size: 20px;
-    line-height: 24px;
-    
-    color: #737373;
-    
+.numeros {
+  color: var(--color-gray-font);
+  font-size: 25px;
 }
 
+.processo {
+  color: var(--color-gray-default);
+}
 
-
-
+.tamanhoCampo {
+  font-size: 20px;
+  color: var(--color-gray-font);
+}

@@ -1,5 +1,5 @@
 <template>
-  <Header/>
+  <Header />
 </template>
 
 <script>
@@ -13,14 +13,5 @@ export default {
 </script>
 
 <style>
-*{
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-}
-body{
-    background-color: #EBEBEB !important;
-}
+
 </style>
