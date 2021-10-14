@@ -57,49 +57,17 @@
             type="text"
             placeholder="Nome"
           />
-          <button class="btn btn-outline-success botaoselecionar" id="close-image" @click="filtraDados()">
+          <button
+            class="btn btn-outline-success botaoselecionar"
+            id="close-image"
+            @click="filtraDados()"
+          >
             <img src="../../assets/imgs/lupa.svg" />
           </button>
         </div>
       </div>
     </div>
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-stripped mt-4">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Formação</th>
-            <th>Turma</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <tr
-            id="participante"
-            v-for="participante in participantes"
-            v-bind:key="participante"
-          >
-            <td id="info-nome">{{ participante.nome }}</td>
-            <td id="info-programa">{{ participante.programa }}</td>
-            <td id="info-turma">{{ participante.turma }}</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-          </tr>
-          <tr>
-            <th class="ultima" scope="rows">TOTAL</th>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-xl-12">
+    <div class="col-xl-12 mt-4" id="participantes">
       <div class="aviso">
         <h4 class="titulo fw-bold">
           Não foi encontrado nenhum resultado com os parâmetros informados
@@ -110,6 +78,42 @@
         >
           RECARREGAR LISTA
         </button>
+      </div>
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-stripped mt-4">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Formação</th>
+              <th>Turma</th>
+              <th>MM/YY</th>
+              <th>MM/YY</th>
+              <th>MM/YY</th>
+            </tr>
+          </thead>
+          <tbody align="center">
+            <tr
+              id="participante"
+              v-for="participante in participantes"
+              v-bind:key="participante"
+            >
+              <td id="info-nome">{{ participante.nome }}</td>
+              <td id="info-programa">{{ participante.programa }}</td>
+              <td id="info-turma">{{ participante.turma }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+            </tr>
+            <tr>
+              <th class="ultima">TOTAL</th>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="container overflow-hidden botoes">
@@ -279,36 +283,43 @@ export default {
           nome: "Marco Aguiar",
           programa: "Java",
           turma: "01",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Matheus Andrade",
           programa: "Java",
           turma: "02",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Lucas Machado",
           programa: "Mobile",
           turma: "02",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Miguel Vasconcelos",
           programa: ".net",
           turma: "03",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Patricia Moraes",
           programa: "Java",
           turma: "01",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Ricardo Benevides",
           programa: "Mainframe",
           turma: "02",
+          salario: "R$ 1500.00"
         },
         {
           nome: "Nicollas Andrade",
           programa: "Java",
           turma: "01",
+          salario: "R$ 1500.00"
         },
       ],
       programas: [
@@ -345,6 +356,12 @@ export default {
         {
           id: 3,
           nome: "03",
+        },
+      ],
+      salarios: [
+        {
+          id: 1,
+          nome: "	R$ 1500.00",
         },
       ],
     };
@@ -499,16 +516,16 @@ body {
 }
 
 .botaoselecionar {
-    display: inline-block;
-    padding: 0px !important;
-    height: 38px;
-    margin: 0px !important;
-    border: none !important;
+  display: inline-block;
+  padding: 0px !important;
+  height: 38px;
+  margin: 0px !important;
+  border: none !important;
 }
 
 #close-image img {
-    display: inline-block;
-    height: 38px;
+  display: inline-block;
+  height: 38px;
 }
 
 #botaoAdicionarManualmente {
@@ -531,10 +548,6 @@ body {
   background: #63657a !important;
   color: #ffffff;
   text-align: left;
-}
-
-#tabela {
-  margin-top: 30px;
 }
 
 #info-nome,
@@ -591,7 +604,7 @@ body {
 }
 
 #close-image:hover {
-  background-color: #00B5;
+  background-color: #00b5;
 }
 
 .aviso {
