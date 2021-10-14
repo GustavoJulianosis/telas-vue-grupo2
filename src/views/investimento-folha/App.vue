@@ -80,7 +80,7 @@
         </button>
       </div>
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-stripped mt-4">
+        <table class="table table-stripped mt-4 tabela">
           <thead>
             <tr>
               <th>Nome</th>
@@ -460,6 +460,7 @@ export default {
       let i;
       var contador = 0;
       let aviso = document.querySelector(".aviso");
+      let tabela = document.querySelector(".tabela")
       var qtdLinhas = linhas.length;
       for (i = 0; i < linhas.length; i++) {
         if (
@@ -475,8 +476,10 @@ export default {
       }
       if (qtdLinhas == contador) {
         aviso.style.display = "flex";
+        tabela.style.display = "none"
       } else {
         aviso.style.display = "none";
+        tabela.style.display = "flex"
       }
     },
   },
