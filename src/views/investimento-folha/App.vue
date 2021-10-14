@@ -79,8 +79,8 @@
           RECARREGAR LISTA
         </button>
       </div>
-      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-stripped mt-4 tabela">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar tabela">
+        <table class="table table-stripped tabela">
           <thead>
             <tr>
               <th>Nome</th>
@@ -617,8 +617,9 @@ body {
   justify-content: center;
   text-align: center;
   position: relative;
-  margin-top: 100px;
+  margin-top: 220px;
   margin-bottom: 200px;
+
 }
 
 .recarregar {
