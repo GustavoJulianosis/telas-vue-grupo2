@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-12 mt-4" id="participantes">
+    <div class="col-lg-12 mt-4" id="participantes">
       <div class="aviso">
         <h4 class="titulo fw-bold">
           Não foi encontrado nenhum resultado com os parâmetros informados
@@ -79,8 +79,8 @@
           RECARREGAR LISTA
         </button>
       </div>
-      <div class="table-wrapper-scroll-y my-custom-scrollbar tabela">
-        <table class="table table-stripped tabela">
+      <div class="table table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table">
           <thead>
             <tr>
               <th>Nome</th>
@@ -91,7 +91,7 @@
               <th>MM/YY</th>
             </tr>
           </thead>
-          <tbody align="center">
+          <tbody>
             <tr
               id="participante"
               v-for="participante in participantes"
@@ -104,6 +104,8 @@
               <td id="info-salario">{{ participante.salario }}</td>
               <td id="info-salario">{{ participante.salario }}</td>
             </tr>
+          </tbody>
+          <tfoot>
             <tr>
               <th class="ultima">TOTAL</th>
               <td class="ultima"></td>
@@ -112,7 +114,7 @@
               <td class="ultima"></td>
               <td class="ultima"></td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </div>
     </div>
@@ -283,43 +285,43 @@ export default {
           nome: "Marco Aguiar",
           programa: "Java",
           turma: "01",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Matheus Andrade",
           programa: "Java",
           turma: "02",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Lucas Machado",
           programa: "Mobile",
           turma: "02",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Miguel Vasconcelos",
-          programa: ".net",
+          programa: ".Net",
           turma: "03",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Patricia Moraes",
           programa: "Java",
           turma: "01",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Ricardo Benevides",
           programa: "Mainframe",
           turma: "02",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
         {
           nome: "Nicollas Andrade",
           programa: "Java",
           turma: "01",
-          salario: "R$ 1500.00"
+          salario: "R$ 1500.00",
         },
       ],
       programas: [
@@ -460,7 +462,7 @@ export default {
       let i;
       var contador = 0;
       let aviso = document.querySelector(".aviso");
-      let tabela = document.querySelector(".tabela")
+      let tabela = document.querySelector(".table");
       var qtdLinhas = linhas.length;
       for (i = 0; i < linhas.length; i++) {
         if (
@@ -476,10 +478,10 @@ export default {
       }
       if (qtdLinhas == contador) {
         aviso.style.display = "flex";
-        tabela.style.display = "none"
+        tabela.style.display = "none";
       } else {
         aviso.style.display = "none";
-        tabela.style.display = "flex"
+        tabela.style.display = "flex";
       }
     },
   },
@@ -619,7 +621,6 @@ body {
   position: relative;
   margin-top: 220px;
   margin-bottom: 200px;
-
 }
 
 .recarregar {

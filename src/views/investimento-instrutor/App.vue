@@ -4,7 +4,7 @@
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
       <div class="col-xl-4">
         <div>
-          <a class="btn mt-4" id="botaoFolha" href="/investimento-folha" role="button">FOLHA</a>
+          <a class="btn mt-4" href="/investimento-folha" id="botaoFolha" role="button">FOLHA</a>
           <a
             class="btn mt-4"
             id="botaoInstrutor"
@@ -56,49 +56,17 @@
             type="text"
             placeholder="Nome"
           />
-          <button class="btn btn-outline-success botaoselecionar" id="close-image" @click="filtraDados()">
+          <button
+            class="btn btn-outline-success botaoselecionar"
+            id="close-image"
+            @click="filtraDados()"
+          >
             <img src="../../assets/imgs/lupa.svg" />
           </button>
         </div>
       </div>
     </div>
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-stripped mt-4">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Formação</th>
-            <th>Turma</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <tr
-            id="participante"
-            v-for="participante in participantes"
-            v-bind:key="participante"
-          >
-            <td id="info-nome">{{ participante.nome }}</td>
-            <td id="info-programa">{{ participante.programa }}</td>
-            <td id="info-turma">{{ participante.turma }}</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-          </tr>
-          <tr>
-            <th class="ultima" scope="rows">TOTAL</th>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-xl-12">
+    <div class="col-lg-12 mt-4" id="participantes">
       <div class="aviso">
         <h4 class="titulo fw-bold">
           Não foi encontrado nenhum resultado com os parâmetros informados
@@ -109,6 +77,44 @@
         >
           RECARREGAR LISTA
         </button>
+      </div>
+      <div class="table table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Formação</th>
+              <th>Turma</th>
+              <th>MM/YY</th>
+              <th>MM/YY</th>
+              <th>MM/YY</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              id="participante"
+              v-for="participante in participantes"
+              v-bind:key="participante"
+            >
+              <td id="info-nome">{{ participante.nome }}</td>
+              <td id="info-programa">{{ participante.programa }}</td>
+              <td id="info-turma">{{ participante.turma }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+              <td id="info-salario">{{ participante.salario }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th class="ultima">TOTAL</th>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+              <td class="ultima"></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
     <div class="container overflow-hidden botoes">
@@ -179,7 +185,7 @@
             </div>
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Remuneração</label>
+                <label id="modalconteudo">Valor Hora</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -191,7 +197,7 @@
                 </div>
               </div>
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Encargos</label>
+                <label id="modalconteudo">Horas Trabalhadas</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -204,20 +210,8 @@
               </div>
             </div>
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-              <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Benefícios</label>
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
-              <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Total</label>
+              <div class="modalitens col-xl-12">
+                <label id="modalconteudo">Valor Total</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -278,36 +272,43 @@ export default {
           nome: "Marco Aguiar",
           programa: "Java",
           turma: "01",
+          salario: "R$ 1500.00",
         },
         {
-          nome: "Guiherme Souza",
+          nome: "Pedro Vieira",
+          programa: "Java",
+          turma: "02",
+          salario: "R$ 1500.00",
+        },
+        {
+          nome: "Marcelo Oliveira",
+          programa: "Mobile",
+          turma: "02",
+          salario: "R$ 1500.00",
+        },
+        {
+          nome: "Vania Silva",
+          programa: ".Net",
+          turma: "03",
+          salario: "R$ 1500.00",
+        },
+        {
+          nome: "Luciana Silva",
           programa: "Java",
           turma: "01",
+          salario: "R$ 1500.00",
         },
         {
-          nome: "Pedro Lucas",
-          programa: "Mobile",
-          turma: "02",
-        },
-        {
-          nome: "Vinicius Melo",
-          programa: ".Net",
-          turma: "03",
-        },
-        {
-          nome: "Eduardo Lopes",
-          programa: "Mobile",
-          turma: "03",
-        },
-        {
-          nome: "Leticia Matos",
-          programa: ".Net",
-          turma: "02",
-        },
-        {
-          nome: "Bruno Henrique",
+          nome: "Joao Godoy",
           programa: "Mainframe",
           turma: "02",
+          salario: "R$ 1500.00",
+        },
+        {
+          nome: "Junior Paulo",
+          programa: "Java",
+          turma: "01",
+          salario: "R$ 1500.00",
         },
       ],
       programas: [
@@ -344,6 +345,12 @@ export default {
         {
           id: 3,
           nome: "03",
+        },
+      ],
+      salarios: [
+        {
+          id: 1,
+          nome: "	R$ 1500.00",
         },
       ],
     };
@@ -442,6 +449,7 @@ export default {
       let i;
       var contador = 0;
       let aviso = document.querySelector(".aviso");
+      let tabela = document.querySelector(".table");
       var qtdLinhas = linhas.length;
       for (i = 0; i < linhas.length; i++) {
         if (
@@ -457,8 +465,10 @@ export default {
       }
       if (qtdLinhas == contador) {
         aviso.style.display = "flex";
+        tabela.style.display = "none";
       } else {
         aviso.style.display = "none";
+        tabela.style.display = "flex";
       }
     },
   },
@@ -482,6 +492,7 @@ body {
 }
 
 #botaoInstrutor {
+  
   background: #ab0045;
   font-weight: bold;
   width: 180px;
@@ -498,16 +509,16 @@ body {
 }
 
 .botaoselecionar {
-    display: inline-block;
-    padding: 0px !important;
-    height: 38px;
-    margin: 0px !important;
-    border: none !important;
+  display: inline-block;
+  padding: 0px !important;
+  height: 38px;
+  margin: 0px !important;
+  border: none !important;
 }
 
 #close-image img {
-    display: inline-block;
-    height: 38px;
+  display: inline-block;
+  height: 38px;
 }
 
 #botaoAdicionarManualmente {
@@ -530,10 +541,6 @@ body {
   background: #63657a !important;
   color: #ffffff;
   text-align: left;
-}
-
-#tabela {
-  margin-top: 30px;
 }
 
 #info-nome,
@@ -590,7 +597,7 @@ body {
 }
 
 #close-image:hover {
-  background-color: #00B5;
+  background-color: #00b5;
 }
 
 .aviso {
@@ -600,7 +607,7 @@ body {
   justify-content: center;
   text-align: center;
   position: relative;
-  margin-top: 100px;
+  margin-top: 220px;
   margin-bottom: 200px;
 }
 
