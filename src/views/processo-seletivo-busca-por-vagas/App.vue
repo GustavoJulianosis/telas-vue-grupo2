@@ -154,27 +154,27 @@ export default {
         },
         {
           id: 9,
-          processo: "Processo Seletivo React Native",
+          processo: "Processo Seletivo C#",
           status: 'EM_ANDAMENTO'
         },
         {
           id: 10,
-          processo: "Processo Seletivo React Native",
+          processo: "Processo Seletivo C++",
           status: 'FINALIZADO'
         },
         {
           id: 11,
-          processo: "Processo Seletivo React Native",
+          processo: "Processo Seletivo Arduino",
           status: 'EM_ANDAMENTO'
         },
         {
           id: 12,
-          processo: "Processo Seletivo React Native",
+          processo: "Processo Seletivo Photoshop",
           status: 'FINALIZADO'
         },
         {
           id: 13,
-          processo: "Processo Seletivo React Native",
+          processo: "Processo Seletivo Scrum",
           status: 'EM_ANDAMENTO'
         }
       ],
