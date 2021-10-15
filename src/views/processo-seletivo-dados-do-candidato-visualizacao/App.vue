@@ -100,6 +100,10 @@ export default {
 
 <style>
 
+body{
+  background-color: #ebebeb;
+}
+
 .titulo{
     color: #090B2E;
     font-weight: bold;

@@ -5,26 +5,26 @@
       <!-- Título da Página -->
       <div class="row justify-content-evenly">
         <div class="col-lg-b6 mb-2 mt-2">
-          <h1 class="mt-3 mb-3">Busca por processos seletivos:</h1>
+          <h1 class="mt-3 mb-3">Busca por candidato:</h1>
         </div>
         <div class="col-lg-6"></div>
       </div>
       <div class="row justify-content-evenly">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
           <!-- Input para filtragem na tabela -->
           <div class="search-input">
-            <div class="col-xl-8">
+            <div class="col-xl-9">
               <input
                 type="text"
                 class="form-control mb-3"
                 id="filtrar-tabela"
-                placeholder="Processo seletivo Java"
+                placeholder="Candidato"
                 @input="filtraDados"
               />
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-7">
           <!-- Tabela dinâmica atualizada automaticamente usando o VueJS -->
           <div class="aviso mb-10 invisivel">
             <h4 class="titulo fw-bold">
@@ -55,23 +55,27 @@
                     {{ processo.id }}
                   </th>
                   <td class="info-nome">{{ processo.nome }}</td>
-                  <td class="aprovado" v-if="processo.status == 'APROVADO_2_FASE'">APROVADO</td>
+                  <td class="aprovado" v-if="processo.status == 'APROVADO_2_FASE'">Aprovado</td>
                   <td class="reprovado" v-if="processo.status == 'REPROVADO_2_FASE'">
-                    REPROVADO
+                    Reprovado
                   </td>
-                  <td class="sem-status" v-if="processo.status == 'SEM_STATUS'">SEM STATUS</td>
-                  <td class="stand" v-if="processo.status == 'STANDBY'">STANDBY</td>
+                  <td class="sem-status" v-if="processo.status == 'SEM_STATUS'">Sem Status</td>
+                  <td class="stand" v-if="processo.status == 'STANDBY'">Standby</td>
                   <td>
-                    <img
-                      src="../../assets/imgs/manage_accounts_white_24dp.svg"
-                      alt=""
-                    />
+                    <a href="http://localhost:8080/processo-seletivo-dados-do-candidato-cadastro-edicao">
+                      <img
+                        src="../../assets/imgs/manage_accounts_white_24dp.svg"
+                        alt=""
+                      />
+                    </a>
                   </td>
                   <td>
-                    <img
-                      src="../../assets/imgs/account_circle_white_24dp.svg"
-                      alt=""
-                    />
+                    <a href="http://localhost:8080/processo-seletivo-dados-do-candidato-visualizacao">
+                      <img
+                        src="../../assets/imgs/account_circle_white_24dp.svg"
+                        alt=""
+                      />
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -79,7 +83,6 @@
           </div>
         </div>
       </div>
-      <div class="row empty"></div>
       <div class="mt-10"></div>
       <div class="row justify-content-between">
         <!-- Botão de busca -->
@@ -87,11 +90,13 @@
         <!-- Botão de cadastro de nova vaga -->
         <div class="col-xl-4">
           <button
-            class="button-footer mb-3 mt-3 submit"
+            class="button-footer mb-3 mt-5 submit"
             id="cadastrar"
-            type="submit"
+            type="button"
           >
-            Cadastrar Nova Vaga
+            <a href="http://localhost:8080/processo-seletivo-dados-do-candidato-cadastro-edicao">
+              Cadastrar Nova Vaga
+            </a>
           </button>
         </div>
       </div>
@@ -338,9 +343,7 @@ body {
 .reprovado,
 .stand,
 .sem-status {
-  font-weight: bold;
-
-  font-size: 20px;
+  font-weight: 700;
 }
 
 /* Aprovado - Verde */
@@ -383,6 +386,13 @@ body {
 .button-footer:hover {
   background-color: var(--color-yellow-principal);
   transition: 0.5s, 0.5s;
+}
+a{
+  color: white;
+  text-decoration: none;
+}
+a:hover{
+  color: white;
 }
 #buscar {
   background-color: var(--color-magenta-principal);
