@@ -11,12 +11,13 @@
       <div class="row justify-content-evenly">
         <div class="col-md-4">
           <div class="mb-3">
-            <label class="label-form" for="Nome">Nomes</label>
+            <label class="label-form" for="Nome">Nome</label>
             <input
               type="text"
               class="form-control"
-              v-model="modelNome"
-              :placeholder="candidato.nome"
+              id="inputNome"
+              placeholder="Nome"
+              v-bind:value="candidato.nome"
             />
           </div>
 
@@ -25,9 +26,9 @@
             <input
               type="tel"
               class="form-control"
-              id="tel"
-              v-model="modelContato"
-              :placeholder="candidato.contato"
+              id="inputContato"
+              placeholder="(xx) xxxxx-xxxx"
+              v-bind:value="candidato.contato"
             />
           </div>
 
@@ -36,20 +37,20 @@
             <input
               type="text"
               class="form-control"
-              id="fonte"
-              v-model="modelFonteRecrutamento"
-              :placeholder="candidato.fonteRecrutamento"
+              id="inputFonteDeRecrutamento"
+              placeholder="Fonte de recrutamento"
+              v-bind:value="candidato.fonteDeRecrutamento"
             />
           </div>
 
           <div class="mb-3">
             <label class="label-form" for="data">Data agendamento</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
-              id="data"
-              v-model="modelDataAgendamento"
-              :placeholder="candidato.dataAgendamento"
+              id="inputDataAgendamento"
+              placeholder="2021/02/15"
+              v-bind:value="candidato.dataAgendamento"
             />
           </div>
 
@@ -58,9 +59,9 @@
             <input
               type="text"
               class="form-control"
-              id="curso"
-              v-model="modelCurso"
-              :placeholder="candidato.curso"
+              id="inputCurso"
+              placeholder="Curso"
+              v-bind:value="candidato.curso"
             />
           </div>
         </div>
@@ -71,9 +72,9 @@
               type="text"
               class="form-control"
               disabled="disabled"
-              id="prova"
-              v-model="modelProvaPratica"
-              :placeholder="candidato.provaPratica"
+              id="inputProvaPratica"
+              placeholder="Prova prática"
+              v-bind:value="candidato.provaPratica"
             />
           </div>
 
@@ -82,24 +83,16 @@
             <input
               type="text"
               class="form-control"
-              id="disc"
               disabled="disabled"
-              v-model="modelDISC"
-              :placeholder="candidato.disc"
+              id="inputDisc"
+              placeholder="DISC"
+              v-bind:value="candidato.disc"
             />
           </div>
 
           <div class="mb-3">
-            <label class="label-form" for="curriculo"
-              >Currículo candidato</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="curriculo"
-              v-model="modelCurriculo"
-              :placeholder="candidato.curriculo"
-            />
+            <label for="curriculoCandidato" class="form-label mb-0 titulo">Currículo candidato</label><br>
+            <a href=""><img src="../../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
           </div>
 
           <div class="mb-3">
@@ -107,9 +100,9 @@
             <textarea
               name="observacoes"
               class="form-control"
-              id="observacao"
-              v-model="modelObservacao"
-              :placeholder="candidato.observacao"
+              id="inputObservacao"
+              placeholder="Observações..."
+              v-bind:value="candidato.observacao"
               rows="5"
             ></textarea>
           </div>
@@ -117,7 +110,7 @@
       </div>
       <div class="row justify-content-evenly mt-4">
         <div class="col-md-4">
-          <div class="mb-3">
+          <div class="mb-2">
             <div for="exampleModal" class="confirmar">
               <div
                 type="button"
@@ -209,15 +202,14 @@ export default {
     return {
       candidato: {
         id: 1,
-        nome: "Diego",
-        contato: "(xx)xxxx-xxxx",
-        fonteRecrutamento: "Palestra via Faculdade",
-        dataAgendamento: "dd/MM/yyyy",
-        curso: "Análise e Desenvolvimento de Sistemas",
-        provaPratica: "10/10",
-        disc: "disc.xlsx",
-        curriculo: "curriculo.pdf",
-        observacao: "Mensagem...",
+        nome: "",
+        contato: "",
+        fonteRecrutamento: "",
+        dataAgendamento: "",
+        curso: "",
+        provaPratica: "",
+        disc: "",
+        observacao: "",
       },
     };
   },
@@ -234,18 +226,22 @@ export default {
       });
     },
     enviarDados() {
-      this.candidato.nome = this.modelNome;
-      this.candidato.contato = this.modelContato;
-      this.candidato.fonteRecrutamento = this.modelFonteRecrutamento;
-      this.candidato.dataAgendamento = this.modelDataAgendamento;
-      this.candidato.curso = this.modelCurso;
-      this.candidato.provaPratica = this.modelProvaPratica;
-      this.candidato.disc = this.modelDisc;
-      this.candidato.curriculo = this.modelCurriculo;
-      this.candidato.observacao = this.modelObservacao;
+      this.candidato.nome = document.querySelector('#inputNome').value;
+      this.candidato.contato = document.querySelector('#inputContato').value
+      this.candidato.fonteRecrutamento = document.querySelector('#inputFonteDeRecrutamento').value
+      this.candidato.dataAgendamento = formataDataParaExibicao(document.querySelector('#inputDataAgendamento').value)
+      this.candidato.curso = document.querySelector('#inputCurso').value
+      this.candidato.provaPratica = document.querySelector('#inputProvaPratica').value
+      this.candidato.disc = document.querySelector('#inputDisc').value
+      this.candidato.observacao = document.querySelector('#inputObservacao').value
     },
-  },
-};
+  }
+}
+function formataDataParaExibicao (data) {
+  const dataPreForm = new Date(data)
+  const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
+  return dataFormatada
+}
 </script>
 
 <style>
@@ -442,4 +438,8 @@ button .largura {
   color: var(--color-gray-font);
   font-size: 24px;
 }
+.download{
+    transform: rotate(180deg) !important;
+}
+
 </style>

@@ -56,7 +56,6 @@
                             <div class="mb-3">
                                 <label for="curriculoCandidato" class="form-label mb-0 titulo">Currículo candidato</label><br>
                                 <a href=""><img src="../../assets/imgs/file_upload_black_24dp.svg" class="download">curriculo.pdf</a>
-                                
                             </div>
                             <div class="mb-3">
                                 <label for="observacoes" class="form-label mb-0 titulo">Observações</label>
