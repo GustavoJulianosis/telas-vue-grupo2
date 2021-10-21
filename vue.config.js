@@ -53,6 +53,24 @@ module.exports= {
             template: 'public/index.html',
             title: 'Dados do candidato - Visualizacao',
             chunks: ['chunk-vendors', 'chunck-common', 'processo-seletivo-dados-do-candidato-visualizacao']
+        },
+        'cadastro-cargo': {
+            entry: './src/views/cadastro-cargo/main.js',
+            template: 'public/index.html',
+            title: 'Cadastro - Cargo',
+            chunks: ['chunk-vendors', 'chunck-common', 'cadastro-cargo']
+        },
+        'visualizar-cargo': {
+            entry: './src/views/visualizar-cargo/main.js',
+            template: 'public/index.html',
+            title: 'Visualizar - Cargo',
+            chunks: ['chunk-vendors', 'chunck-common', 'visualizar-cargo']
+        },
+        'lista-cargos': {
+            entry: './src/views/lista-cargos/main.js',
+            template: 'public/index.html',
+            title: 'Lista - Cargos',
+            chunks: ['chunk-vendors', 'chunck-common', 'lista-cargos']
         }
     }
 }

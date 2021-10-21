@@ -5,7 +5,7 @@
       <!-- Título da Página -->
       <div class="row justify-content-evenly">
         <div class="col-lg-b6 mb-2 mt-2">
-          <h1 class="mt-3 mb-3">Busca por processos seletivos:</h1>
+          <h1 class="mt-3 mb-3">Busca por cargos:</h1>
         </div>
         <div class="col-lg-6"></div>
       </div>
@@ -18,7 +18,7 @@
                 type="text"
                 class="form-control mb-3"
                 id="filtrar-tabela"
-                placeholder="Processo seletivo Java"
+                placeholder="Estágiario 1"
                 @input="filtraDados"
               />
             </div>
@@ -47,20 +47,16 @@
               <tbody class="processosSeletivos">
                 <tr
                   class="processo"
-                  v-for="processo in processosSeletivos"
-                  :key="processo"
+                  v-for="cargo in cargos"
+                  :key="cargo"
                 >
                   <th class="font-weight-normal" scope="row">
-                    {{ processo.id }}
+                    {{ cargo.id }}
                   </th>
-                  <td class="info-nome">{{ processo.processo }}</td>
-                  <td class="em-andamento" v-if="processo.status == 'EM_ANDAMENTO'">Em andamento</td>
-                  <td class="finalizado" v-if="processo.status == 'FINALIZADO'">
-                    Finalizado
-                  </td>
+                  <td class="info-nome">{{ cargo.cargo }}</td>
                   <td>
                     <a
-                      href="http://localhost:8080/processo-seletivo-dados-da-vaga-visualizacao"
+                      href="http://localhost:8080/visualizar-cargo"
                     >
                       <img
                         src="../../assets/imgs/visibility_white_24dp.svg"
@@ -69,12 +65,13 @@
                     </a>
                   </td>
                   <td>
+                    <a href="http://localhost:8080/cadastro-cargo">
                     <img
                       src="../../assets/imgs/settings_white_24dp.svg"
                       alt=""
                     />
+                    </a>
                   </td>
-                  <td><img src="../../assets/imgs/Pattern.svg" alt="" /></td>
                 </tr>
               </tbody>
             </table>
@@ -82,18 +79,20 @@
         </div>
       </div>
       <div class="row empty"></div>
-      <div class="mt-10"></div>
+      <div class="mt-8"></div>
       <div class="row justify-content-between">
         <!-- Botão de busca -->
         <div class="col-xl-4"></div>
         <!-- Botão de cadastro de nova vaga -->
         <div class="col-xl-4">
           <button
-            class="button-footer mb-3 mt-5  submit"
+            class="button-footer mb-3 mt-4 submit"
             id="cadastrar"
-            type="submit"
+            type="button"
           >
-            Cadastrar Nova Vaga
+          <a class="button-footer submit" href="http://localhost:8080/cadastro-cargo">
+            CADASTRAR NOVO CARGO
+          </a>
           </button>
         </div>
       </div>
@@ -111,73 +110,44 @@ export default {
 
   data() {
     return {
-      processosSeletivos: [
+      cargos: [
         {
-          id: 1,
-          processo: "Processo Seletivo Java",
-          status: 'EM_ANDAMENTO'
+          id: '1',
+          cargo: 'Estágiario 1'
         },
         {
-          id: 2,
-          processo: "Processo Seletivo Python",
-          status: 'FINALIZADO'
+          id: '2',
+          cargo: 'Estágiario 2'
         },
         {
-          id: 3,
-          processo: "Processo Seletivo Spring",
-          status: 'FINALIZADO'
+          id: '3',
+          cargo: 'Estágiario 3'
         },
         {
-          id: 4,
-          processo: "Processo Seletivo Mainframe",
-          status: 'FINALIZADO'
+          id: '4',
+          cargo: 'Trainee 1'
         },
         {
-          id: 5,
-          processo: "Processo Seletivo Mobile",
-          status: 'EM_ANDAMENTO'
+          id: '5',
+          cargo: 'Trainee 2'
         },
         {
-          id: 6,
-          processo: "Processo Seletivo JavaScript",
-          status: 'FINALIZADO'
+          id: '6',
+          cargo: 'Trainee 3'
         },
         {
-          id: 7,
-          processo: "Processo Seletivo React Native",
-          status: 'EM_ANDAMENTO'
+          id: '7',
+          cargo: 'Jovem Aprendiz 1'
         },
         {
-          id: 8,
-          processo: "Processo Seletivo COBOL",
-          status: 'EM_ANDAMENTO'
+           id: '8',
+          cargo: 'Jovem Aprendiz 2'
         },
         {
-          id: 9,
-          processo: "Processo Seletivo React Native",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 10,
-          processo: "Processo Seletivo React Native",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 11,
-          processo: "Processo Seletivo React Native",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 12,
-          processo: "Processo Seletivo React Native",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 13,
-          processo: "Processo Seletivo React Native",
-          status: 'EM_ANDAMENTO'
+           id: '9',
+          cargo: 'Jovem Aprendiz 3'
         }
-      ],
+      ]
     };
   },
   methods: {
@@ -303,29 +273,16 @@ height: 59vh;
   font-size: 20px;
 }
 
-/* Table - Coluna em Andamento */
-.search-table tbody > tr > td:nth-child(3) {
-  text-align: center;
-  font-weight: 700;
-}
-
 /* Table - Coluna1  */
-.search-table tbody > tr > td:nth-child(4) {
+.search-table tbody > tr > td:nth-child(3) {
   background-color: var(--color-blue-principal);
   font-weight: 700;
   text-align: center;
 }
 
 /* Table - Coluna2  */
-.search-table tbody > tr > td:nth-child(5) {
+.search-table tbody > tr > td:nth-child(4) {
   background-color: var(--color-magenta-principal);
-  font-weight: 700;
-  text-align: center;
-}
-
-/* Table - Coluna3  */
-.search-table tbody > tr > td:nth-child(6) {
-  background-color: var(--color-yellow-principal);
   font-weight: 700;
   text-align: center;
 }
@@ -367,6 +324,10 @@ height: 59vh;
 .button-footer:hover {
   background-color: var(--color-yellow-principal);
   transition: 0.5s, 0.5s;
+}
+
+a:hover{
+  color: white;
 }
 
 #buscar {

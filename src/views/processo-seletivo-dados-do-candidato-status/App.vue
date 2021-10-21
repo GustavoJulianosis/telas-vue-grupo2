@@ -161,6 +161,9 @@ export default {
 </script>
 
 <style>
+body{
+  background-color: #ebebeb;
+}
 .titulo{
     color: #090B2E;
     font-weight: bold;
@@ -185,6 +188,9 @@ export default {
 
 textarea{
     resize: none !important;
+}
+input{
+  background: white;
 }
 
 .download{
