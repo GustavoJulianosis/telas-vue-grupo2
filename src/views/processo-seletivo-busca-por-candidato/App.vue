@@ -48,19 +48,19 @@
               <tbody class="processosSeletivos">
                 <tr
                   class="processo"
-                  v-for="processo in processo"
-                  :key="processo"
+                  v-for="candidato in candidatos"
+                  :key="candidato"
                 >
                   <th class="font-weight-normal" scope="row">
-                    {{ processo.id }}
+                    {{ candidato.id }}
                   </th>
-                  <td class="info-nome">{{ processo.nome }}</td>
-                  <td class="aprovado" v-if="processo.status == 'APROVADO_2_FASE'">Aprovado</td>
-                  <td class="reprovado" v-if="processo.status == 'REPROVADO_2_FASE'">
-                    Reprovado
-                  </td>
-                  <td class="sem-status" v-if="processo.status == 'SEM_STATUS'">Sem Status</td>
-                  <td class="stand" v-if="processo.status == 'STANDBY'">Standby</td>
+                  <td class="info-nome">{{ candidato.nome }}</td>
+                  <td class="aprovado" v-if="candidato.status == 'APROVADO_2_FASE'">Aprovado</td>
+                  <td class="aprovado" v-if="candidato.status == 'APROVADO_1_FASE'">Aprovado 1ª fase</td>
+                  <td class="reprovado" v-if="candidato.status == 'REPROVADO_1_FASE'">Reprovado 1ª fase</td>
+                  <td class="reprovado" v-if="candidato.status == 'REPROVADO_2_FASE'">Reprovado</td>
+                  <td class="sem-status" v-if="candidato.status == 'SEM_STATUS'">Sem Status</td>
+                  <td class="stand" v-if="candidato.status == 'STANDBY'">Standby</td>
                   <td>
                     <a href="http://localhost:8080/processo-seletivo-dados-do-candidato-cadastro-edicao">
                       <img
@@ -106,6 +106,8 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import Candidato from "../../services/candidato";
+
 export default {
   name: "App",
   components: {
@@ -113,59 +115,11 @@ export default {
   },
   data() {
     return {
-      processo: [
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 2,
-          nome: "Calopsita",
-          status: "REPROVADO_2_FASE",
-        },
-        {
-          id: 3,
-          nome: "Nico Stepatt",
-          status: "SEM_STATUS",
-        },
-        {
-          id: 4,
-          nome: "Gabriel Paulista",
-          status: "STANDBY",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-        {
-          id: 1,
-          nome: "Priscila Estuani",
-          status: "APROVADO_2_FASE",
-        },
-      ],
+      candidatos: [],
     };
+  },
+  mounted(){
+    this.listar()
   },
   methods: {
     filtraDados() {
@@ -205,6 +159,11 @@ export default {
         }
       }
     },
+    listar(){
+      Candidato.listar().then(response =>{
+            this.candidatos = response.data
+          })
+    }
   },
 };
 </script>
