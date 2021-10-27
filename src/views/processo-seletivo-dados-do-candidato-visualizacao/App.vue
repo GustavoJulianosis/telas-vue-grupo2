@@ -72,6 +72,7 @@
 
 <script>
 import Header from '@/components/Header.vue'
+import Candidato from '../../services/candidato'
 
 export default {
     name: 'App',
@@ -80,18 +81,20 @@ export default {
     },
     data () {
         return{
-            candidato: {
-                "id": 1,
-                "nome": "Gustavo de Oliveira Juliano",
-                "contato":"(14)99706-2197",
-                "fonteRecrutamento":"Palestra via Faculdade",
-                "dataAgendamento":"31/10/2021",
-                "curso":"Análise e Desenvolvimento de Sistemas",
-                "status":"APROVADO_1_FASE",
-                "provaPratica":"10/10",
-                "disc":"D:10 I:10 S:10 C:10",
-                "observacoes":"Observações feitas através do Vue"
-            }
+            teste: {
+                id: '1'
+            },
+            candidato: {}
+        }
+    },
+    mounted() {
+        this.visualizar()
+    },
+    methods: {
+        visualizar(){
+            Candidato.visualizar().then(response =>{
+                this.candidato = response.data;
+            })
         }
     }
 }

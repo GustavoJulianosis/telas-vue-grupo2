@@ -260,6 +260,9 @@ function formataDataParaExibicao (data) {
 
 
 <style>
+body{
+  background-color: #ebebeb;
+}
 .titulo {
   color: #090b2e;
   font-weight: bold;
