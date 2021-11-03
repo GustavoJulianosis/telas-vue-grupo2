@@ -21,11 +21,11 @@
               <option disabled selected value="0">Formação</option>
               <option
                 id="programa"
-                v-bind:value="programa.id"
-                v-for="programa in programas"
-                v-bind:key="programa"
+                v-bind:value="participante.nomeFormacao"
+                v-for="participante in participantes"
+                v-bind:key="participante"
               >
-                {{ programa.nome }}
+                {{ participante.nomeFormacao }}
               </option>
             </select>
           </div>
@@ -90,12 +90,12 @@
             v-for="participante in participantes"
             v-bind:key="participante"
           >
-            <td id="info-nome">{{ participante.nome }}</td>
-            <td id="info-programa">{{ participante.programa }}</td>
-            <td id="info-turma">{{ participante.turma }}</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
+           <td id="info-nome">{{ participante.nomeParticipante }}</td>             <!--   Uma variavel só e puxar todos pelo .   -->
+            <td id="info-programa">{{ participante.nomeFormacao }}</td>
+            <td id="info-turma">{{ participante.nomeTurma }}</td>
+            <td id="info-salario"> R$ {{ participante.bolsaAux }}</td>
+            <td id="info-salario"> R${{ participante.bolsaAux }}</td>
+            <td id="info-salario"> R${{ participante.bolsaAux }}</td>
           </tr>
           <tr>
             <th class="ultima" scope="rows">TOTAL</th>
@@ -275,6 +275,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -283,80 +284,13 @@ export default {
   },
   data() {
     return {
-      participantes: [
-        {
-          nome: "Marco Aguiar",
-          programa: "Java",
-          turma: "01",
-        },
-        {
-          nome: "Matheus Andrade",
-          programa: "Java",
-          turma: "02",
-        },
-        {
-          nome: "Lucas Machado",
-          programa: "Mobile",
-          turma: "02",
-        },
-        {
-          nome: "Miguel Vasconcelos",
-          programa: ".net",
-          turma: "03",
-        },
-        {
-          nome: "Patricia Moraes",
-          programa: "Java",
-          turma: "01",
-        },
-        {
-          nome: "Ricardo Benevides",
-          programa: "Mainframe",
-          turma: "02",
-        },
-        {
-          nome: "Nicollas Andrade",
-          programa: "Java",
-          turma: "01",
-        },
-      ],
-      programas: [
-        {
-          id: 1,
-          nome: "Infraestrutura",
-        },
-        {
-          id: 2,
-          nome: "Java",
-        },
-        {
-          id: 3,
-          nome: "Mainframe",
-        },
-        {
-          id: 4,
-          nome: "Mobile",
-        },
-        {
-          id: 5,
-          nome: ".Net",
-        },
-      ],
-      turmas: [
-        {
-          id: 1,
-          nome: "01",
-        },
-        {
-          id: 2,
-          nome: "02",
-        },
-        {
-          id: 3,
-          nome: "03",
-        },
-      ],
+      participantes: [       // tudo esta sendo transportado aqui
+      ]
     };
+  },
+
+  beforeMount(){
+    this.getParticipantes()
   },
   methods: {
     filtraDados() {
@@ -471,7 +405,18 @@ export default {
         aviso.style.display = "none";
       }
     },
+
+    getParticipantes () {
+      axios
+      .get("http://localhost:8080/api/folha")
+      .then(response =>{
+        this.participantes = response.data    //tudo no participante, separar em variaveis
+      }).catch(error =>{
+        console.log(error);
+      })
+    }
   },
+
 };
 </script>
 
