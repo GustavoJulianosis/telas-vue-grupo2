@@ -27,7 +27,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="dado.dataInicio"
+                v-bind:placeholder="this.formataData(dado.dataInicio)"
                 disabled
               />
             </div>
@@ -37,7 +37,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="dado.dataFim"
+                v-bind:placeholder="this.formataData(dado.dataFim)"
                 disabled
               />
             </div>
@@ -138,14 +138,14 @@
                 </div>
                 <div class="modal-body-group">
                   <h2>Data de início</h2>
-                  <p>{{ dado.dataInicio }}</p>
+                  <p>{{ this.formataData(dado.dataInicio) }}</p>
                 </div>
               </div>
               <div class="col-xl-2"></div>
               <div class="col-xl-5 mt-5">
                 <div class="modal-body-group">
                   <h2>Data do Término</h2>
-                  <p>{{ dado.dataFim }}</p>
+                  <p>{{ this.formataData(dado.dataFim) }}</p>
                 </div>
                 <div class="modal-body-group">
                   <h2>Quantidade de participantes</h2>
@@ -216,6 +216,7 @@ export default {
           console.log(error);
         });
     },
+    
     obterId () {
       var query = location.search.slice(1) // Recuperar o ID
       var partes = query.split('&') // GET pelo Id
@@ -227,6 +228,12 @@ export default {
         data[chave] = valor // Como se fosse um dicionário
       })
       return data
+    },
+
+    formataData (data) {
+      const dataSemFormatacao = new Date(data)
+      const dataFormatada = `${dataSemFormatacao.getUTCDate()}/${dataSemFormatacao.getUTCMonth() + 1}/${dataSemFormatacao.getUTCFullYear()}`
+      return dataFormatada
     },
   },
 };
