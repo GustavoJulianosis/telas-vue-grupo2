@@ -56,12 +56,12 @@
                   >
                     Em andamento
                   </td>
-                  <td class="finalizado" v-if="processo.status == 'FINALIZADO'">
-                    Finalizado
+                  <td class="finalizado" v-if="processo.status == 'ENCERRADO'">
+                    Encerrado
                   </td>
                   <td>
                     <a
-                      href="http://localhost:8080/processo-seletivo-dados-da-vaga-visualizacao"
+                      :href="'/processo-seletivo-dados-da-vaga-visualizacao?id=' + processo.id"
                     >
                       <img
                         src="../../assets/imgs/visibility_white_24dp.svg"

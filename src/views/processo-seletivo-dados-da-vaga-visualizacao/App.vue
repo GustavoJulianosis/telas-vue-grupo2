@@ -134,7 +134,7 @@
               <div class="col-xl-5">
                 <div class="modal-body-group">
                   <h2>Formação</h2>
-                  <p>{{ dado.nome }}</p>
+                  <p>{{ dado.nomeTurma }}</p>
                 </div>
                 <div class="modal-body-group">
                   <h2>Data de início</h2>
@@ -171,8 +171,8 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
-import axios from "axios";
+import Header from "@/components/Header.vue"
+import axios from "axios"
 
 export default {
   name: "App",
@@ -183,7 +183,8 @@ export default {
 
   data() {
     return {
-      dado: []
+      dado: {},
+      id: this.obterId().id
     };
   },
 
@@ -205,15 +206,27 @@ export default {
         modal.removeAttribute("style");
       });
     },
-    getDados() {
+    getDados(id) {
       axios
-        .get("http://localhost:8080/api/programa/1")
+        .get(`http://localhost:8080/api/programa/${this.id}`)
         .then(response => {
           this.dado = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    obterId () {
+      var query = location.search.slice(1) // Recuperar o ID
+      var partes = query.split('&') // GET pelo Id
+      var data = {}
+      partes.forEach(function (parte) {
+        var dict = parte.split('=')
+        var chave = dict[0]
+        var valor = dict[1]
+        data[chave] = valor // Como se fosse um dicionário
+      })
+      return data
     },
   },
 };
