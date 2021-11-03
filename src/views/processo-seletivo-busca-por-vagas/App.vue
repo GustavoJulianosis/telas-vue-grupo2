@@ -39,11 +39,7 @@
           </div>
           <div class="search-table table-wrapper-scroll-y my-custom-scrollbar">
             <!--  -->
-            <table
-              class="
-                table table-bordered 
-              "
-            >
+            <table class="table table-bordered">
               <tbody class="processosSeletivos">
                 <tr
                   class="processo"
@@ -53,8 +49,13 @@
                   <th class="font-weight-normal" scope="row">
                     {{ processo.id }}
                   </th>
-                  <td class="info-nome">{{ processo.processo }}</td>
-                  <td class="em-andamento" v-if="processo.status == 'EM_ANDAMENTO'">Em andamento</td>
+                  <td class="info-nome">{{ processo.nome }}</td>
+                  <td
+                    class="em-andamento"
+                    v-if="processo.status == 'EM_ANDAMENTO'"
+                  >
+                    Em andamento
+                  </td>
                   <td class="finalizado" v-if="processo.status == 'FINALIZADO'">
                     Finalizado
                   </td>
@@ -89,7 +90,7 @@
         <!-- Botão de cadastro de nova vaga -->
         <div class="col-xl-4">
           <button
-            class="button-footer mb-3 mt-5  submit"
+            class="button-footer mb-3 mt-5 submit"
             id="cadastrar"
             type="submit"
           >
@@ -103,6 +104,9 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import Programa from "../../services/programa";
+import axios from "axios";
+
 export default {
   name: "App",
   components: {
@@ -111,75 +115,13 @@ export default {
 
   data() {
     return {
-      processosSeletivos: [
-        {
-          id: 1,
-          processo: "Processo Seletivo Java",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 2,
-          processo: "Processo Seletivo Python",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 3,
-          processo: "Processo Seletivo Spring",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 4,
-          processo: "Processo Seletivo Mainframe",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 5,
-          processo: "Processo Seletivo Mobile",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 6,
-          processo: "Processo Seletivo JavaScript",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 7,
-          processo: "Processo Seletivo React Native",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 8,
-          processo: "Processo Seletivo COBOL",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 9,
-          processo: "Processo Seletivo C#",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 10,
-          processo: "Processo Seletivo C++",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 11,
-          processo: "Processo Seletivo Arduino",
-          status: 'EM_ANDAMENTO'
-        },
-        {
-          id: 12,
-          processo: "Processo Seletivo Photoshop",
-          status: 'FINALIZADO'
-        },
-        {
-          id: 13,
-          processo: "Processo Seletivo Scrum",
-          status: 'EM_ANDAMENTO'
-        }
-      ],
+      processosSeletivos: [],
     };
   },
+  beforeMount () {
+    this.getBusca()
+  },
+
   methods: {
     filtraDados() {
       var aviso = document.querySelector(".aviso");
@@ -224,6 +166,16 @@ export default {
           aviso.classList.remove("invisivel");
         }
       }
+    },
+    getBusca() {
+      axios
+        .get("http://localhost:8080/api/programa/busca")
+        .then((response) => {
+          this.processosSeletivos = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -273,14 +225,14 @@ body {
 
 /* Scroll */
 .my-custom-scrollbar {
-position: relative;
-height: 59vh;
-overflow: auto;
+  position: relative;
+  height: 59vh;
+  overflow: auto;
 }
 
 .table-wrapper-scroll-y {
-display: block;
-height: 59vh;
+  display: block;
+  height: 59vh;
 }
 
 /* Input de busca */
@@ -350,7 +302,6 @@ height: 59vh;
   color: var(--color-red-progress) !important;
 }
 
-
 /* Button do rodapé */
 
 .button-footer {
@@ -408,6 +359,4 @@ height: 59vh;
 .recarregar:hover {
   background-color: #141863 !important;
 }
-
-
 </style>

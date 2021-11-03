@@ -17,7 +17,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.formacao"
+                v-bind:placeholder="dado.nomeTurma"
                 disabled
               />
             </div>
@@ -27,7 +27,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.dataInicio"
+                v-bind:placeholder="dado.dataInicio"
                 disabled
               />
             </div>
@@ -37,7 +37,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.dataTermino"
+                v-bind:placeholder="dado.dataFim"
                 disabled
               />
             </div>
@@ -47,7 +47,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.qtdEstagiarios"
+                v-bind:placeholder="dado.qtdEstagiario"
                 disabled
               />
             </div>
@@ -58,7 +58,7 @@
                 type="text"
                 class="form-control"
                 id="disabledTextInput"
-                v-bind:placeholder="candidato.qtdTrainees"
+                v-bind:placeholder="dado.qtdTrainee"
                 disabled
               />
             </div>
@@ -71,7 +71,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.qtdAprendizes"
+                v-bind:placeholder="dado.qtdAprendiz"
                 disabled
               />
             </div>
@@ -81,7 +81,7 @@
               <input
                 type="text"
                 class="form-control"
-                v-bind:placeholder="candidato.participantesTotais"
+                v-bind:placeholder="dado.participantesTotais"
                 disabled
               />
             </div>
@@ -134,22 +134,22 @@
               <div class="col-xl-5">
                 <div class="modal-body-group">
                   <h2>Formação</h2>
-                  <p>{{ candidato.formacao }}</p>
+                  <p>{{ dado.nome }}</p>
                 </div>
                 <div class="modal-body-group">
                   <h2>Data de início</h2>
-                  <p>{{ candidato.dataInicio }}</p>
+                  <p>{{ dado.dataInicio }}</p>
                 </div>
               </div>
               <div class="col-xl-2"></div>
               <div class="col-xl-5 mt-5">
                 <div class="modal-body-group">
                   <h2>Data do Término</h2>
-                  <p>{{ candidato.dataTermino }}</p>
+                  <p>{{ dado.dataFim }}</p>
                 </div>
                 <div class="modal-body-group">
                   <h2>Quantidade de participantes</h2>
-                  <p>{{ candidato.participantesTotais }}</p>
+                  <p>{{ dado.participantesTotais }}</p>
                 </div>
               </div>
             </div>
@@ -172,11 +172,25 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import axios from "axios";
+
 export default {
   name: "App",
+
   components: {
     Header,
   },
+
+  data() {
+    return {
+      dado: []
+    };
+  },
+
+  beforeMount() {
+    this.getDados();
+  },
+
   methods: {
     modal() {
       let btn = document.querySelector("#disabled");
@@ -191,21 +205,16 @@ export default {
         modal.removeAttribute("style");
       });
     },
-  },
-
-  data() {
-    return {
-      candidato: {
-        id: 1,
-        formacao: "Formação Java",
-        dataInicio: "dd/MM/yyyy",
-        dataTermino: "dd/MM/yyyy",
-        qtdEstagiarios: 20,
-        qtdTrainees: 30,
-        qtdAprendizes: 5,
-        participantesTotais: 55,
-      },
-    };
+    getDados() {
+      axios
+        .get("http://localhost:8080/api/programa/1")
+        .then(response => {
+          this.dado = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
