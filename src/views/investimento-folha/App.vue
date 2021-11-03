@@ -38,11 +38,11 @@
               <option disabled selected value="0">Turmas</option>
               <option
                 id="turma"
-                v-bind:value="turma.id"
-                v-for="turma in turmas"
-                v-bind:key="turma"
+                v-bind:value="participante.nomeTurma"
+                v-for="participante in participantes"
+                v-bind:key="participante"
               >
-                {{ turma.nome }}
+                {{ participante.nomeTurma }}
               </option>
             </select>
           </div>

@@ -23,11 +23,11 @@
               <option disabled selected value="0">Formação</option>
               <option
                 id="programa"
-                v-bind:value="programa.id"
-                v-for="programa in programas"
-                v-bind:key="programa"
+                v-bind:value="instrutor.nomeFormacao"
+                v-for="instrutor in instrutores"
+                v-bind:key="instrutor"
               >
-                {{ programa.nome }}
+                {{ instrutor.nomeFormacao }}
               </option>
             </select>
           </div>
@@ -40,11 +40,11 @@
               <option disabled selected value="0">Turmas</option>
               <option
                 id="turma"
-                v-bind:value="turma.id"
-                v-for="turma in turmas"
-                v-bind:key="turma"
+                v-bind:value="instrutor.nomeTurma"
+                v-for="instrutor in instrutores"
+                v-bind:key="instrutor"
               >
-                {{ turma.nome }}
+                {{ instrutor.nomeTurma }}
               </option>
             </select>
           </div>
@@ -89,15 +89,15 @@
         <tbody align="center">
           <tr
             id="participante"
-            v-for="participante in participantes"
-            v-bind:key="participante"
+            v-for="instrutor in instrutores"
+            v-bind:key="instrutor"
           >
-            <td id="info-nome">{{ participante.nome }}</td>
-            <td id="info-programa">{{ participante.programa }}</td>
-            <td id="info-turma">{{ participante.turma }}</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
-            <td id="info-salario">R$ 1500.00</td>
+            <td id="info-nome">{{ instrutor.nomeInstrutor }}</td>
+            <td id="info-programa">{{ instrutor.nomeFormacao }}</td>
+            <td id="info-turma">{{ instrutor.nomeTurma }}</td>
+            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
+            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
+            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
           </tr>
           <tr>
             <th class="ultima" scope="rows">TOTAL</th>
@@ -265,6 +265,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -273,80 +274,13 @@ export default {
   },
   data() {
     return {
-      participantes: [
-        {
-          nome: "Marco Aguiar",
-          programa: "Java",
-          turma: "01",
-        },
-        {
-          nome: "Guiherme Souza",
-          programa: "Mainframe",
-          turma: "02",
-        },
-        {
-          nome: "Pedro Lucas",
-          programa: "Mobile",
-          turma: "02",
-        },
-        {
-          nome: "Vinicius Melo",
-          programa: ".net",
-          turma: "01",
-        },
-        {
-          nome: "Eduardo Lopes",
-          programa: "Java",
-          turma: "03",
-        },
-        {
-          nome: "Leticia Matos",
-          programa: "Mainframe",
-          turma: "01",
-        },
-        {
-          nome: "Bruno Henrique",
-          programa: ".Net",
-          turma: "02",
-        },
-      ],
-      programas: [
-        {
-          id: 1,
-          nome: "Infraestrutura",
-        },
-        {
-          id: 2,
-          nome: "Java",
-        },
-        {
-          id: 3,
-          nome: "Mainframe",
-        },
-        {
-          id: 4,
-          nome: "Mobile",
-        },
-        {
-          id: 5,
-          nome: ".Net",
-        },
-      ],
-      turmas: [
-        {
-          id: 1,
-          nome: "01",
-        },
-        {
-          id: 2,
-          nome: "02",
-        },
-        {
-          id: 3,
-          nome: "03",
-        },
-      ],
+      instrutores: [
+      ]
     };
+  },
+
+  beforeMount(){
+    this.getInstrutores()
   },
   methods: {
     filtraDados() {
@@ -461,6 +395,16 @@ export default {
         aviso.style.display = "none";
       }
     },
+
+    getInstrutores(){
+      axios
+      .get("http://localhost:8080/api/instrutor")
+      .then(response =>{
+        this.instrutores = response.data    //tudo no participante, separar em variaveis
+      }).catch(error =>{
+        console.log(error);
+      })
+    }
   },
 };
 </script>
