@@ -19,14 +19,12 @@
           <div class="form-group mt-4">
             <select class="form-control" id="filtro-programa">
               <option disabled selected value="0">Formação</option>
-              <option
-                id="programa"
-                v-bind:value="participante.nomeFormacao"
-                v-for="participante in participantes"
-                v-bind:key="participante"
-              >
-                {{ participante.nomeFormacao }}
-              </option>
+              <option value="1">Java</option>
+              <option value="2">Cobol</option>
+              <option value="3">.Net</option>
+              <option value="4">Mobile</option>
+              <option value="5">Mainframe</option>
+              <option value="6">Infraestrutura</option>
             </select>
           </div>
         </div>
@@ -36,14 +34,9 @@
           <div class="form-group mt-4">
             <select class="form-control" id="filtro-turma">
               <option disabled selected value="0">Turmas</option>
-              <option
-                id="turma"
-                v-bind:value="participante.nomeTurma"
-                v-for="participante in participantes"
-                v-bind:key="participante"
-              >
-                {{ participante.nomeTurma }}
-              </option>
+              <option value="1">Turma I</option>
+              <option value="2">Turma II</option>
+              <option value="3">Turma III</option>
             </select>
           </div>
         </div>
@@ -63,11 +56,7 @@
             type="submit"
             @click="filtraDados()"
           >
-            <img
-              id="imagem"
-              src="../../assets/imgs/lupa1.svg"
-              alt="lupa para pesquisa"
-            />
+            <img src="../../assets/imgs/lupa1.svg" alt="lupa para pesquisa" id="lupa"/>
           </button>
         </div>
       </div>
@@ -75,7 +64,7 @@
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <table class="table table-stripped mt-4">
         <thead>
-          <tr>
+          <tr class="extremoAlto">
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
@@ -90,14 +79,14 @@
             v-for="participante in participantes"
             v-bind:key="participante"
           >
-           <td id="info-nome">{{ participante.nomeParticipante }}</td>             <!--   Uma variavel só e puxar todos pelo .   -->
+            <td id="info-nome">{{ participante.nomeParticipante }}</td>
             <td id="info-programa">{{ participante.nomeFormacao }}</td>
             <td id="info-turma">{{ participante.nomeTurma }}</td>
-            <td id="info-salario"> R$ {{ participante.bolsaAux }}</td>
-            <td id="info-salario"> R${{ participante.bolsaAux }}</td>
-            <td id="info-salario"> R${{ participante.bolsaAux }}</td>
+            <td id="info-salario">R$ {{ participante.bolsaAux }}</td>
+            <td id="info-salario">R${{ participante.bolsaAux }}</td>
+            <td id="info-salario">R${{ participante.bolsaAux }}</td>
           </tr>
-          <tr>
+          <tr class="extremoBaixo">
             <th class="ultima" scope="rows">TOTAL</th>
             <td class="ultima"></td>
             <td class="ultima"></td>
@@ -284,109 +273,128 @@ export default {
   },
   data() {
     return {
-      participantes: [       // tudo esta sendo transportado aqui
-      ]
+      participantes: [],
     };
   },
 
-  beforeMount(){
-    this.getParticipantes()
+  beforeMount() {
+    this.getParticipantes();
   },
   methods: {
     filtraDados() {
       const dadosLinhas = this.pegaDados();
+
       let nomeProcurado = document.querySelector("#filtro-nome").value;
       let programaProcurado = document.querySelector("#filtro-programa").value;
       let turmaProcurada = document.querySelector("#filtro-turma").value;
       let linhasNl = document.querySelectorAll("#participante");
+
       var linhasArray = Array.prototype.slice.call(linhasNl);
+
       let arrayBoolLinhas = this.verifica(
         dadosLinhas,
         nomeProcurado,
         programaProcurado,
         turmaProcurada
       );
+
       this.mudaVisibilidade(arrayBoolLinhas, linhasArray);
     },
+
     pegaDados() {
       let linhas = document.querySelectorAll("#participante");
-      let programas = document.querySelectorAll("#programa");
-      let arrayProgramas = [];
       let arrayDadosDasLinhas = [];
-      programas.forEach((programa) => {
-        arrayProgramas.push(programa.textContent);
-      });
-      console.log(arrayProgramas);
+
       linhas.forEach((linha) => {
         let dadosLinha = [];
         let nome = linha.querySelector("#info-nome").textContent;
-        let programa = this.trataPrograma(linha, arrayProgramas);
+
+        let programa = this.trataPrograma(linha);
         let turma = this.trataTurma(linha);
+
         dadosLinha.push(nome, programa, turma);
         arrayDadosDasLinhas.push(dadosLinha);
       });
-      console.log(arrayDadosDasLinhas);
+
       return arrayDadosDasLinhas;
     },
+
     trataTurma(linha) {
       let turmaTxt = linha.querySelector("#info-turma").textContent;
       let turma = 0;
-      if (turmaTxt == "01") {
-        turma = 1;
-        return turma;
-      } else if (turmaTxt == "02") {
-        turma = 2;
-        return turma;
-      } else if (turmaTxt == "03") {
-        turma = 3;
-        return turma;
+
+      if (turmaTxt == "Turma I") {
+        return (turma = 1);
+      } else if (turmaTxt == "Turma II") {
+        return (turma = 2);
+      } else if (turmaTxt == "Turma III") {
+        return (turma = 3);
       }
+
       return turma;
     },
-    trataPrograma(linha, arrayProgramas) {
+
+    trataPrograma(linha) {
       var programaTxt = linha.querySelector("#info-programa").textContent;
-      let programaNum = 0;
-      let i = 0;
-      for (let i = 0; i < arrayProgramas.length; i++) {
-        if (programaTxt == arrayProgramas[i]) {
-          programaNum = i + 1;
-          return programaNum;
-        }
+      let programa = 0;
+
+      if (programaTxt == "Java") {
+        return (programa = 1);
+      } else if (programaTxt == "Cobol") {
+        return (programa = 2);
+      } else if (programaTxt == ".Net") {
+        return (programa = 3);
+      } else if (programaTxt == "Mobile") {
+        return (programa = 4);
+      } else if (programaTxt == "Mainframe") {
+        return (programa = 5);
+      } else if (programaTxt == "Infraestrutura") {
+        return (programa = 6);
       }
-      return programaNum;
+
+      return (programa = 0);
     },
+
     verifica(dadosLinhas, nomeProcurado, programaProcurado, turmaProcurada) {
       let arrayBoolLinhas = [];
       let expressao = new RegExp(nomeProcurado, "i");
+
       dadosLinhas.forEach((dadosLinha) => {
         let boolLinha = [];
+
         // Verificando se o nome procurado consta na tabela
         if (expressao.test(dadosLinha[0]) || nomeProcurado == "") {
           boolLinha.push(true);
         } else {
           boolLinha.push(false);
         }
+
         // Verificando se o programa procurado consta na tabela
         if (programaProcurado == dadosLinha[1] || programaProcurado == 0) {
           boolLinha.push(true);
         } else {
           boolLinha.push(false);
         }
+
         // Verificando se a turma procurada consta na tabela
         if (turmaProcurada == dadosLinha[2] || turmaProcurada == 0) {
           boolLinha.push(true);
         } else {
           boolLinha.push(false);
         }
+        console.log(boolLinha);
         arrayBoolLinhas.push(boolLinha);
       });
+
       return arrayBoolLinhas;
     },
+
     mudaVisibilidade(arrayBoolLinhas, linhas) {
       let i;
       var contador = 0;
       let aviso = document.querySelector(".aviso");
       var qtdLinhas = linhas.length;
+
       for (i = 0; i < linhas.length; i++) {
         if (
           arrayBoolLinhas[i][0] &&
@@ -399,30 +407,34 @@ export default {
           contador++;
         }
       }
+
       if (qtdLinhas == contador) {
         aviso.style.display = "flex";
       } else {
         aviso.style.display = "none";
       }
     },
-
-    getParticipantes () {
+    getParticipantes() {
       axios
-      .get("http://localhost:8080/api/folha")
-      .then(response =>{
-        this.participantes = response.data    //tudo no participante, separar em variaveis
-      }).catch(error =>{
-        console.log(error);
-      })
-    }
+        .get("http://localhost:8080/api/folha")
+        .then((response) => {
+          this.participantes = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
-
 };
 </script>
 
 <style>
 body {
   background: #ebebeb;
+}
+
+[id^="info-"]{
+  font-weight: 500;      /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/ 
 }
 
 .tela {
@@ -466,6 +478,12 @@ body {
 
 #botaoSelecionar {
   height: 38px;
+  width: 60px;
+  border: none;
+}
+
+#lupa {
+  width: 100%;
 }
 
 .ultima {
@@ -485,10 +503,6 @@ body {
   text-align: left;
 }
 
-.forte {
-  font-weight: bold;
-}
-
 #modalinteiro {
   background-color: #ebebeb;
 }
@@ -502,10 +516,6 @@ body {
 .table-wrapper-scroll-y {
   display: block;
   height: 59vh;
-}
-
-#info-nome {
-  font-weight: bold;
 }
 
 .botao {
@@ -525,10 +535,6 @@ body {
 
 .invisivel {
   display: none;
-}
-
-#botaoSelecionar {
-  width: 40px;
 }
 
 #botaoSelecionar:hover {
