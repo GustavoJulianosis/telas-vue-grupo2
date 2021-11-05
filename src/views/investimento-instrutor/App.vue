@@ -11,7 +11,7 @@
             role="button"
             >FOLHA</a
           >
-          <a class="btn mt-4" id="botaoInstrutor" href="#" role="button"
+          <a class="btn mt-4" id="botaoInstrutor" role="button"
             >INSTRUTOR</a
           >
         </div>
@@ -74,9 +74,9 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
+            <th>07/2021</th>
+            <th>08/2021</th>
+            <th>09/2021</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -435,6 +435,10 @@ body {
   font-weight: 500;      /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/ 
 }
 
+#imagem {
+  width: 100%;
+}
+
 #botaoFolha {
   background: #ffb600;
   font-weight: bold;
@@ -472,6 +476,8 @@ body {
 
 #botaoSelecionar {
   height: 38px;
+  width: 60px;
+  border: none;
 }
 
 .ultima {
@@ -530,9 +536,7 @@ body {
   display: none;
 }
 
-#botaoSelecionar {
-  width: 40px;
-}
+
 
 #botaoSelecionar:hover {
   background-color: steelblue;
@@ -545,8 +549,7 @@ body {
   justify-content: center;
   text-align: center;
   position: relative;
-  margin-top: 100px;
-  margin-bottom: 200px;
+  margin-bottom: 400px;
 }
 
 .recarregar {

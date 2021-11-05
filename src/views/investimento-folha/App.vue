@@ -4,7 +4,7 @@
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
       <div class="col-xl-4">
         <div>
-          <a class="btn mt-4" id="botaoFolha" href="#" role="button">FOLHA</a>
+          <a class="btn mt-4" id="botaoFolha" role="button">FOLHA</a>
           <a
             class="btn mt-4"
             id="botaoInstrutor"
@@ -68,9 +68,9 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
-            <th>MM/YY</th>
+            <th>07/2021</th>
+            <th>08/2021</th>
+            <th>09/2021</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -548,8 +548,7 @@ body {
   justify-content: center;
   text-align: center;
   position: relative;
-  margin-top: 100px;
-  margin-bottom: 200px;
+  margin-bottom: 400px;
 }
 
 .recarregar {
