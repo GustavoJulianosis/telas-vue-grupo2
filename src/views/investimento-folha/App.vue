@@ -16,30 +16,24 @@
       </div>
       <div class="col-xl-2">
         <div>
-          <div class="form-group mt-4">
-            <select class="form-control" id="filtro-programa">
-              <option disabled selected value="0">Formação</option>
-              <option value="1">Java</option>
-              <option value="2">Cobol</option>
-              <option value="3">.Net</option>
-              <option value="4">Mobile</option>
-              <option value="5">Mainframe</option>
-              <option value="6">Infraestrutura</option>
-            </select>
-          </div>
+          <select class="form-select formacao" aria-label="Default select example" id="filtro-programa">
+            <option disabled selected value="0">Formação</option>
+            <option value="1">Java</option>
+            <option value="2">Cobol</option>
+            <option value="3">.Net</option>
+            <option value="4">Mobile</option>
+            <option value="5">Mainframe</option>
+            <option value="6">Infraestrutura</option>
+          </select>
         </div>
       </div>
       <div class="col-xl-2">
-        <div>
-          <div class="form-group mt-4">
-            <select class="form-control" id="filtro-turma">
-              <option disabled selected value="0">Turmas</option>
-              <option value="1">Turma I</option>
-              <option value="2">Turma II</option>
-              <option value="3">Turma III</option>
-            </select>
-          </div>
-        </div>
+        <select class="form-select turma" aria-label="Default select example" id="filtro-turma">
+          <option disabled selected value="0">Turmas</option>
+          <option value="1">Turma I</option>
+          <option value="2">turma II</option>
+          <option value="3">turma III</option>
+        </select>
       </div>
       <div class="col-xl-4">
         <div class="d-flex mt-4">
@@ -56,7 +50,11 @@
             type="submit"
             @click="filtraDados()"
           >
-            <img src="../../assets/imgs/lupa1.svg" alt="lupa para pesquisa" id="lupa"/>
+            <img
+              src="../../assets/imgs/lupa1.svg"
+              alt="lupa para pesquisa"
+              id="lupa"
+            />
           </button>
         </div>
       </div>
@@ -433,8 +431,8 @@ body {
   background: #ebebeb;
 }
 
-[id^="info-"]{
-  font-weight: 500;      /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/ 
+[id^="info-"] {
+  font-weight: 500; /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/
 }
 
 .tela {
@@ -470,6 +468,10 @@ body {
   color: #ffffff;
   margin-left: 120px;
   border: none;
+}
+
+.formacao, .turma {
+  margin-top: 24px;
 }
 
 #filtro-nome {
