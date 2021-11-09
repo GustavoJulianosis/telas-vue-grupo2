@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="container">
-    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <div class="row g-2 g-lg-3">
       <div class="col-xl-4">
         <div>
           <a class="btn mt-4" id="botaoFolha" role="button">FOLHA</a>
@@ -14,49 +14,31 @@
           >
         </div>
       </div>
-      <div class="col-xl-2">
-        <div>
-          <select class="form-select formacao" aria-label="Default select example" id="filtro-programa">
-            <option disabled selected value="0">Formação</option>
-            <option value="1">Java</option>
-            <option value="2">Cobol</option>
-            <option value="3">.Net</option>
-            <option value="4">Mobile</option>
-            <option value="5">Mainframe</option>
-            <option value="6">Infraestrutura</option>
+      <div class="col-xl-8">
+        <form class="formulario row g-3">
+        <div class="formacoes col-md-3">
+          <select class="filtro-programa form-select mt-4" id="validationDefault04" required>
+            <option selected disabled value="">Formação</option>
+            <option>Java</option>
+            <option>Cobol</option>
+            <option>.Net</option>
+            <option>Mobile</option>
+            <option>Mainframe</option>
+            <option>Infraestrutura</option>
           </select>
         </div>
-      </div>
-      <div class="col-xl-2">
-        <select class="form-select turma" aria-label="Default select example" id="filtro-turma">
-          <option disabled selected value="0">Turmas</option>
-          <option value="1">Turma I</option>
-          <option value="2">turma II</option>
-          <option value="3">turma III</option>
-        </select>
-      </div>
-      <div class="col-xl-4">
-        <div class="d-flex mt-4">
-          <input
-            name="nome"
-            id="filtro-nome"
-            class="form-control me-2"
-            type="text"
-            placeholder="Nome"
-          />
-          <button
-            id="botaoSelecionar"
-            class="btn btn-outline-success"
-            type="submit"
-            @click="filtraDados()"
-          >
-            <img
-              src="../../assets/imgs/lupa1.svg"
-              alt="lupa para pesquisa"
-              id="lupa"
-            />
-          </button>
+        <div class="col-md-3">
+          <select class="filtro-turma turmas form-select mt-4" id="validationDefault04" required>
+            <option selected disabled value="">Turmas</option>
+            <option>Turma I</option>
+            <option>Turma II</option>
+            <option>Turma III</option>
+          </select>
         </div>
+        <div class="col-md-3">
+          <button class="botaoConfirmar btn btn-primary mt-4" type="button"  v-on:click="filtrarDados()">Pesquisar</button>
+        </div>
+      </form>
       </div>
     </div>
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -272,156 +254,18 @@ export default {
   data() {
     return {
       participantes: [],
+      programaProcurado: '',
+      turmaProcurada: ''
     };
   },
-
-  beforeMount() {
-    this.getParticipantes();
-  },
   methods: {
-    filtraDados() {
-      const dadosLinhas = this.pegaDados();
 
-      let nomeProcurado = document.querySelector("#filtro-nome").value;
-      let programaProcurado = document.querySelector("#filtro-programa").value;
-      let turmaProcurada = document.querySelector("#filtro-turma").value;
-      let linhasNl = document.querySelectorAll("#participante");
-
-      var linhasArray = Array.prototype.slice.call(linhasNl);
-
-      let arrayBoolLinhas = this.verifica(
-        dadosLinhas,
-        nomeProcurado,
-        programaProcurado,
-        turmaProcurada
-      );
-
-      this.mudaVisibilidade(arrayBoolLinhas, linhasArray);
-    },
-
-    pegaDados() {
-      let linhas = document.querySelectorAll("#participante");
-      let arrayDadosDasLinhas = [];
-
-      linhas.forEach((linha) => {
-        let dadosLinha = [];
-        let nome = linha.querySelector("#info-nome").textContent;
-
-        let programa = this.trataPrograma(linha);
-        let turma = this.trataTurma(linha);
-
-        dadosLinha.push(nome, programa, turma);
-        arrayDadosDasLinhas.push(dadosLinha);
-      });
-
-      return arrayDadosDasLinhas;
-    },
-
-    trataTurma(linha) {
-      let turmaTxt = linha.querySelector("#info-turma").textContent;
-      let turma = 0;
-
-      if (turmaTxt == "Turma I") {
-        return (turma = 1);
-      } else if (turmaTxt == "Turma II") {
-        return (turma = 2);
-      } else if (turmaTxt == "Turma III") {
-        return (turma = 3);
-      }
-
-      return turma;
-    },
-
-    trataPrograma(linha) {
-      var programaTxt = linha.querySelector("#info-programa").textContent;
-      let programa = 0;
-
-      if (programaTxt == "Java") {
-        return (programa = 1);
-      } else if (programaTxt == "Cobol") {
-        return (programa = 2);
-      } else if (programaTxt == ".Net") {
-        return (programa = 3);
-      } else if (programaTxt == "Mobile") {
-        return (programa = 4);
-      } else if (programaTxt == "Mainframe") {
-        return (programa = 5);
-      } else if (programaTxt == "Infraestrutura") {
-        return (programa = 6);
-      }
-
-      return (programa = 0);
-    },
-
-    verifica(dadosLinhas, nomeProcurado, programaProcurado, turmaProcurada) {
-      let arrayBoolLinhas = [];
-      let expressao = new RegExp(nomeProcurado, "i");
-
-      dadosLinhas.forEach((dadosLinha) => {
-        let boolLinha = [];
-
-        // Verificando se o nome procurado consta na tabela
-        if (expressao.test(dadosLinha[0]) || nomeProcurado == "") {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-
-        // Verificando se o programa procurado consta na tabela
-        if (programaProcurado == dadosLinha[1] || programaProcurado == 0) {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-
-        // Verificando se a turma procurada consta na tabela
-        if (turmaProcurada == dadosLinha[2] || turmaProcurada == 0) {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-        console.log(boolLinha);
-        arrayBoolLinhas.push(boolLinha);
-      });
-
-      return arrayBoolLinhas;
-    },
-
-    mudaVisibilidade(arrayBoolLinhas, linhas) {
-      let i;
-      var contador = 0;
-      let aviso = document.querySelector(".aviso");
-      var qtdLinhas = linhas.length;
-
-      for (i = 0; i < linhas.length; i++) {
-        if (
-          arrayBoolLinhas[i][0] &&
-          arrayBoolLinhas[i][1] &&
-          arrayBoolLinhas[i][2]
-        ) {
-          linhas[i].style.display = "";
-        } else {
-          linhas[i].style.display = "none";
-          contador++;
-        }
-      }
-
-      if (qtdLinhas == contador) {
-        aviso.style.display = "flex";
-      } else {
-        aviso.style.display = "none";
-      }
-    },
-    getParticipantes() {
-      axios
-        .get("http://localhost:8080/api/folha")
-        .then((response) => {
-          this.participantes = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    filtrarDados() {
+      this.programaProcurado = document.querySelector(".filtro-programa").value;
+      this.turmaProcurada = document.querySelector(".filtro-turma").value;
+      axios.get("http://localhost:8080/investimento-folha/" + this.programaProcurado + "/" + this.turmaProcurada)
+      .then(response => this.participantes = response.data)  //Apenas o conteúdo
+      },
   },
 };
 </script>
@@ -470,9 +314,18 @@ body {
   border: none;
 }
 
-.formacao, .turma {
-  margin-top: 24px;
+.formacao,
+.turma {
+  margin-top: 22px;
 }
+
+
+.botaoConfirmar {
+  margin-left: 30px;
+  background: #090B2E;
+  color: white;
+}
+
 
 #filtro-nome {
   height: 38px;
