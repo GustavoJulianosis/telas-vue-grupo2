@@ -8,7 +8,7 @@
           <a
             class="btn mt-4"
             id="botaoInstrutor"
-            href="/investimento-instrutor/App.vue"
+            href="/investimento-instrutor"
             role="button"
             >INSTRUTOR</a
           >
@@ -244,7 +244,8 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import axios from "axios";
+import { http } from "../../services/Config";
+import funcoes from "../../services/Funcoes";
 
 export default {
   name: "App",
@@ -263,7 +264,7 @@ export default {
     filtrarDados() {
       this.programaProcurado = document.querySelector(".filtro-programa").value;
       this.turmaProcurada = document.querySelector(".filtro-turma").value;
-      axios.get("http://localhost:8080/investimento-folha/" + this.programaProcurado + "/" + this.turmaProcurada)
+      http.get("investimento-folha/" + this.programaProcurado + "/" + this.turmaProcurada)
       .then(response => this.participantes = response.data)  //Apenas o conteúdo
       },
   },

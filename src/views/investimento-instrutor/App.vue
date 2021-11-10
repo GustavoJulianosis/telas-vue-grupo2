@@ -7,64 +7,52 @@
           <a
             class="btn mt-4"
             id="botaoFolha"
-            href="/investimento-folha/App.vue"
+            href="/investimento-folha"
             role="button"
             >FOLHA</a
           >
-          <a class="btn mt-4" id="botaoInstrutor" role="button"
-            >INSTRUTOR</a
-          >
+          <a class="btn mt-4" id="botaoInstrutor" role="button">INSTRUTOR</a>
         </div>
       </div>
-      <div class="col-xl-2">
-        <div>
-          <div class="form-group mt-4">
-            <select class="form-control" id="filtro-programa">
-              <option disabled selected value="0">Formação</option>
-              <option value="1">Java</option>
-              <option value="2">Cobol</option>
-              <option value="3">.Net</option>
-              <option value="4">Mobile</option>
-              <option value="5">Mainframe</option>
-              <option value="6">Infraestrutura</option>
+      <div class="col-xl-8">
+        <form class="formulario row g-3">
+          <div class="formacoes col-md-3">
+            <select
+              class="filtro-programa form-select mt-4"
+              id="validationDefault04"
+              required
+            >
+              <option selected disabled value="">Formação</option>
+              <option>Java</option>
+              <option>Cobol</option>
+              <option>.Net</option>
+              <option>Mobile</option>
+              <option>Mainframe</option>
+              <option>Infraestrutura</option>
             </select>
           </div>
-        </div>
-      </div>
-      <div class="col-xl-2">
-        <div>
-          <div class="form-group mt-4">
-            <select class="form-control" id="filtro-turma">
-              <option disabled selected value="0">Turmas</option>
-              <option value="1">Turma I</option>
-              <option value="2">Turma II</option>
-              <option value="3">Turma III</option>
+          <div class="col-md-3">
+            <select
+              class="filtro-turma turmas form-select mt-4"
+              id="validationDefault04"
+              required
+            >
+              <option selected disabled value="">Turmas</option>
+              <option>Turma I</option>
+              <option>Turma II</option>
+              <option>Turma III</option>
             </select>
           </div>
-        </div>
-      </div>
-      <div class="col-xl-4">
-        <div class="d-flex mt-4">
-          <input
-            name="nome"
-            id="filtro-nome"
-            class="form-control me-2"
-            type="text"
-            placeholder="Nome"
-          />
-          <button
-            id="botaoSelecionar"
-            class="btn btn-outline-success"
-            type="submit"
-            @click="filtraDados()"
-          >
-            <img
-              id="imagem"
-              src="../../assets/imgs/lupa1.svg"
-              alt="lupa para pesquisa"
-            />
-          </button>
-        </div>
+          <div class="col-md-3">
+            <button
+              class="botaoConfirmar btn btn-primary mt-4"
+              type="button"
+              v-on:click="filtrarDados(), mostrarSalario()"
+            >
+              Pesquisar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -81,16 +69,16 @@
         </thead>
         <tbody align="center">
           <tr
-            id="participante"
+            id="instrutores"
             v-for="instrutor in instrutores"
             v-bind:key="instrutor"
           >
             <td id="info-nome">{{ instrutor.nomeInstrutor }}</td>
             <td id="info-programa">{{ instrutor.nomeFormacao }}</td>
             <td id="info-turma">{{ instrutor.nomeTurma }}</td>
-            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
-            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
-            <td id="info-salario"> R$ {{ instrutor.valorHora }} </td>
+            <div id="salarios" v-for="salario in salarios" v-bind:key="salario">
+              <th id="info-salario">R$ {{ salario.salarioFinal }}</th>
+            </div>
           </tr>
           <tr>
             <th class="ultima" scope="rows">TOTAL</th>
@@ -258,7 +246,8 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import axios from "axios";
+import { http } from "../../services/Config";
+import funcoes from "../../services/Funcoes";
 
 export default {
   name: "App",
@@ -267,157 +256,37 @@ export default {
   },
   data() {
     return {
-      instrutores: [
-      ]
+      instrutores: [],
+      salarios: [],
     };
   },
 
-  beforeMount(){
-    this.getInstrutores()
-  },
   methods: {
-    filtraDados() {
-      const dadosLinhas = this.pegaDados();
-
-      let nomeProcurado = document.querySelector("#filtro-nome").value;
-      let programaProcurado = document.querySelector("#filtro-programa").value;
-      let turmaProcurada = document.querySelector("#filtro-turma").value;
-      let linhasNl = document.querySelectorAll("#participante");
-
-      var linhasArray = Array.prototype.slice.call(linhasNl);
-
-      let arrayBoolLinhas = this.verifica(
-        dadosLinhas,
-        nomeProcurado,
-        programaProcurado,
-        turmaProcurada
-      );
-
-      this.mudaVisibilidade(arrayBoolLinhas, linhasArray);
+    filtrarDados() {
+      this.programaProcurado = document.querySelector(".filtro-programa").value;
+      this.turmaProcurada = document.querySelector(".filtro-turma").value;
+      http
+        .get(
+          "instrutor/buscar-instrutor/" +
+            this.programaProcurado +
+            "/" +
+            this.turmaProcurada
+        )
+        .then((response) => (this.instrutores = response.data)); //Apenas o nome, formação e turma
     },
 
-    pegaDados() {
-      let linhas = document.querySelectorAll("#participante");
-      let arrayDadosDasLinhas = [];
-
-      linhas.forEach((linha) => {
-        let dadosLinha = [];
-        let nome = linha.querySelector("#info-nome").textContent;
-
-        let programa = this.trataPrograma(linha);
-        let turma = this.trataTurma(linha);
-
-        dadosLinha.push(nome, programa, turma);
-        arrayDadosDasLinhas.push(dadosLinha);
-      });
-
-      return arrayDadosDasLinhas;
+    mostrarSalario() {
+      this.programaProcurado = document.querySelector(".filtro-programa").value;
+      this.turmaProcurada = document.querySelector(".filtro-turma").value;
+      http
+        .get(
+          "instrutor/buscar-salario/" +
+            this.programaProcurado +
+            "/" +
+            this.turmaProcurada
+        )
+        .then((response) => (this.salarios = response.data)); //Apenas o salario
     },
-
-    trataTurma(linha) {
-      let turmaTxt = linha.querySelector("#info-turma").textContent;
-      let turma = 0;
-
-      if (turmaTxt == "Turma I") {
-        return (turma = 1);
-      } else if (turmaTxt == "Turma II") {
-        return (turma = 2);
-      } else if (turmaTxt == "Turma III") {
-        return (turma = 3);
-      }
-
-      return turma;
-    },
-
-    trataPrograma(linha) {
-      var programaTxt = linha.querySelector("#info-programa").textContent;
-      let programa = 0;
-
-      if (programaTxt == "Java") {
-        return (programa = 1);
-      } else if (programaTxt == "Cobol") {
-        return (programa = 2);
-      } else if (programaTxt == ".Net") {
-        return (programa = 3);
-      } else if (programaTxt == "Mobile") {
-        return (programa = 4);
-      } else if (programaTxt == "Mainframe") {
-        return (programa = 5);
-      } else if (programaTxt == "Infraestrutura") {
-        return (programa = 6);
-      }
-
-      return (programa = 0);
-    },
-
-    verifica(dadosLinhas, nomeProcurado, programaProcurado, turmaProcurada) {
-      let arrayBoolLinhas = [];
-      let expressao = new RegExp(nomeProcurado, "i");
-
-      dadosLinhas.forEach((dadosLinha) => {
-        let boolLinha = [];
-
-        // Verificando se o nome procurado consta na tabela
-        if (expressao.test(dadosLinha[0]) || nomeProcurado == "") {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-
-        // Verificando se o programa procurado consta na tabela
-        if (programaProcurado == dadosLinha[1] || programaProcurado == 0) {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-
-        // Verificando se a turma procurada consta na tabela
-        if (turmaProcurada == dadosLinha[2] || turmaProcurada == 0) {
-          boolLinha.push(true);
-        } else {
-          boolLinha.push(false);
-        }
-        console.log(boolLinha);
-        arrayBoolLinhas.push(boolLinha);
-      });
-
-      return arrayBoolLinhas;
-    },
-
-    mudaVisibilidade(arrayBoolLinhas, linhas) {
-      let i;
-      var contador = 0;
-      let aviso = document.querySelector(".aviso");
-      var qtdLinhas = linhas.length;
-
-      for (i = 0; i < linhas.length; i++) {
-        if (
-          arrayBoolLinhas[i][0] &&
-          arrayBoolLinhas[i][1] &&
-          arrayBoolLinhas[i][2]
-        ) {
-          linhas[i].style.display = "";
-        } else {
-          linhas[i].style.display = "none";
-          contador++;
-        }
-      }
-
-      if (qtdLinhas == contador) {
-        aviso.style.display = "flex";
-      } else {
-        aviso.style.display = "none";
-      }
-    },
-    getInstrutores(){
-      axios
-      .get("http://localhost:8080/api/instrutor")
-      .then(response =>{
-        this.instrutores = response.data    //tudo no participante, separar em variaveis
-      }).catch(error =>{
-        console.log(error);
-      })
-    }
   },
 };
 </script>
@@ -431,8 +300,8 @@ body {
   background-color: #ebebeb;
 }
 
-[id^="info-"]{
-  font-weight: 500;      /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/ 
+[id^="info-"] {
+  font-weight: 500; /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/
 }
 
 #imagem {
@@ -512,7 +381,6 @@ body {
   height: 59vh;
 }
 
-
 .scrollbar-primary {
   scrollbar-color: #f5f5f5;
 }
@@ -535,8 +403,6 @@ body {
 .invisivel {
   display: none;
 }
-
-
 
 #botaoSelecionar:hover {
   background-color: steelblue;
