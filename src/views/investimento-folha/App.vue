@@ -16,35 +16,58 @@
       </div>
       <div class="col-xl-8">
         <form class="formulario row g-3">
-        <div class="formacoes col-md-3">
-          <select class="filtro-programa form-select mt-4" id="validationDefault04" required>
-            <option selected disabled value="">Formação</option>
-            <option>Java</option>
-            <option>Cobol</option>
-            <option>.Net</option>
-            <option>Mobile</option>
-            <option>Mainframe</option>
-            <option>Infraestrutura</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <select class="filtro-turma turmas form-select mt-4" id="validationDefault04" required>
-            <option selected disabled value="">Turmas</option>
-            <option>Turma I</option>
-            <option>Turma II</option>
-            <option>Turma III</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <button class="botaoConfirmar btn btn-primary mt-4" type="button"  v-on:click="filtrarDados()">Pesquisar</button>
-        </div>
-      </form>
+          <div class="formacoes col-xl-3">
+            <select
+              class="filtro-programa form-select mt-4"
+              id="validationDefault04"
+              required
+            >
+              <option selected disabled value="">Formação</option>
+              <option>Java</option>
+              <option>Cobol</option>
+              <option>.Net</option>
+              <option>Mobile</option>
+              <option>Mainframe</option>
+              <option>Infraestrutura</option>
+            </select>
+          </div>
+          <div class="col-xl-3">
+            <select
+              class="filtro-turma turmas form-select mt-4"
+              id="validationDefault04"
+              required
+            >
+              <option selected disabled value="">Turmas</option>
+              <option>Turma I</option>
+              <option>Turma II</option>
+              <option>Turma III</option>
+            </select>
+          </div>
+          <div class="col-xl-2">
+            <button
+              class="botaoConfirmar btn btn-primary mt-4"
+              type="button"
+              v-on:click="filtrarDados(), mudaVisibilidade()"
+            >
+              Pesquisar
+            </button>
+          </div>
+          <!-- <div class="col-xl-2">
+            <button
+              class="botaoOrdenar btn btn-primary mt-4"
+              type="button"
+              v-on:click="Ordenar()"
+            >
+              Ordenar
+            </button>
+          </div> -->
+        </form>
       </div>
     </div>
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
       <table class="table table-stripped mt-4">
         <thead>
-          <tr class="extremoAlto">
+          <tr>
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
@@ -66,16 +89,17 @@
             <td id="info-salario">R${{ participante.bolsaAux }}</td>
             <td id="info-salario">R${{ participante.bolsaAux }}</td>
           </tr>
-          <tr class="extremoBaixo">
-            <th class="ultima" scope="rows">TOTAL</th>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-          </tr>
         </tbody>
+        <tfoot class="extremo">
+          <tr>
+            <th scope="row">TOTAL</th>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
+      <div class="mensagem col-xl-12">
+        Por favor, filtre os campos Formação e Turma para continuar
+      </div>
     </div>
     <div class="col-xl-12">
       <div class="aviso">
@@ -255,18 +279,31 @@ export default {
   data() {
     return {
       participantes: [],
-      programaProcurado: '',
-      turmaProcurada: ''
+      programaProcurado: "",
+      turmaProcurada: "",
     };
   },
   methods: {
-
     filtrarDados() {
       this.programaProcurado = document.querySelector(".filtro-programa").value;
       this.turmaProcurada = document.querySelector(".filtro-turma").value;
-      http.get("investimento-folha/" + this.programaProcurado + "/" + this.turmaProcurada)
-      .then(response => this.participantes = response.data)  //Apenas o conteúdo
-      },
+      http
+        .get(
+          "investimento-folha/" +
+            this.programaProcurado +
+            "/" +
+            this.turmaProcurada
+        )
+        .then((response) => (this.participantes = response.data)); //Apenas o conteúdo
+    },
+
+    mudaVisibilidade() {
+      let mensagem = document.querySelector(".mensagem");
+      let extremo = document.querySelector(".extremo");
+
+      mensagem.style.display = "none";
+      extremo.style.display = "flex";
+    }
   },
 };
 </script>
@@ -320,13 +357,28 @@ body {
   margin-top: 22px;
 }
 
+.extremo {
+  display: none;
+}
+
+.mensagem {
+  margin-top: 120px;
+  color: #090b2e;
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+}
 
 .botaoConfirmar {
-  margin-left: 30px;
-  background: #090B2E;
+  margin-left: 15px;
+  background: #090b2e;
   color: white;
 }
 
+.botaoOrdenar {
+  background: #090b2e;
+  color: white;
+}
 
 #filtro-nome {
   height: 38px;
@@ -340,12 +392,6 @@ body {
 
 #lupa {
   width: 100%;
-}
-
-.ultima {
-  background: #63657a !important;
-  color: #ffffff;
-  text-align: left;
 }
 
 #tabela {

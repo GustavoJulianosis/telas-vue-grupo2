@@ -47,7 +47,7 @@
             <button
               class="botaoConfirmar btn btn-primary mt-4"
               type="button"
-              v-on:click="filtrarDados(), mostrarSalario()"
+              v-on:click="filtrarDados(), mudaVisibilidade()"
             >
               Pesquisar
             </button>
@@ -80,16 +80,15 @@
               <th id="info-salario">R$ {{ salario.salarioFinal }}</th>
             </div>
           </tr>
-          <tr>
-            <th class="ultima" scope="rows">TOTAL</th>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-            <td class="ultima"></td>
-          </tr>
         </tbody>
+        <tfoot class="extremo">
+          <tr>
+            <th scope="row">TOTAL</th>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
+      <div class="mensagem col-xl-12">Por favor, filtre os campos Formação e Turma para continuar</div>
     </div>
     <div class="col-xl-12">
       <div class="aviso">
@@ -287,6 +286,14 @@ export default {
         )
         .then((response) => (this.salarios = response.data)); //Apenas o salario
     },
+
+    mudaVisibilidade(){
+        let mensagem = document.querySelector(".mensagem");
+        let extremo = document.querySelector(".extremo");
+        
+        mensagem.style.display = "none";
+        extremo.style.display = "flex";
+      }
   },
 };
 </script>
@@ -349,10 +356,22 @@ body {
   border: none;
 }
 
-.ultima {
-  background: #63657a !important;
-  color: #ffffff;
-  text-align: left;
+.extremo {
+  display: none;
+}
+
+.botaoConfirmar {
+  background: mediumblue;
+  color: white;
+  margin-left: 30px;
+}
+
+.mensagem {
+  margin-top: 120px;
+  color: #090B2E;
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
 }
 
 #tabela {
