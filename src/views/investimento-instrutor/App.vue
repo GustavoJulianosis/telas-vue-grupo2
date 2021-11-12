@@ -361,7 +361,7 @@ body {
 }
 
 .botaoConfirmar {
-  background: mediumblue;
+  background: #090b2e;
   color: white;
   margin-left: 30px;
 }

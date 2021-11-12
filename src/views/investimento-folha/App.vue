@@ -71,9 +71,9 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>07/2021</th>
-            <th>08/2021</th>
-            <th>09/2021</th>
+            <th>RS mês anterior</th>
+            <th>R$ mês atual</th>
+            <th>Data fim programa</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -86,8 +86,8 @@
             <td id="info-programa">{{ participante.nomeFormacao }}</td>
             <td id="info-turma">{{ participante.nomeTurma }}</td>
             <td id="info-salario">R$ {{ participante.bolsaAux }}</td>
-            <td id="info-salario">R${{ participante.bolsaAux }}</td>
-            <td id="info-salario">R${{ participante.bolsaAux }}</td>
+            <td id="info-salario">R$ {{ participante.bolsaAux }}</td>
+            <td id="info-salario">11/11/2022</td>
           </tr>
         </tbody>
         <tfoot class="extremo">
