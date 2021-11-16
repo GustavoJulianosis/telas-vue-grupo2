@@ -52,15 +52,6 @@
               Pesquisar
             </button>
           </div>
-          <!-- <div class="col-xl-2">
-            <button
-              class="botaoOrdenar btn btn-primary mt-4"
-              type="button"
-              v-on:click="Ordenar()"
-            >
-              Ordenar
-            </button>
-          </div> -->
         </form>
       </div>
     </div>
@@ -71,8 +62,8 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>RS mês anterior</th>
             <th>R$ mês atual</th>
+            <th>R$ mês anterior</th>
             <th>Data fim programa</th>
           </tr>
         </thead>
@@ -81,13 +72,34 @@
             id="participante"
             v-for="participante in participantes"
             v-bind:key="participante"
+            class="participantes"
           >
-            <td id="info-nome">{{ participante.nomeParticipante }}</td>
-            <td id="info-programa">{{ participante.nomeFormacao }}</td>
-            <td id="info-turma">{{ participante.nomeTurma }}</td>
-            <td id="info-salario">R$ {{ participante.bolsaAux }}</td>
-            <td id="info-salario">R$ {{ participante.bolsaAux }}</td>
-            <td id="info-salario">11/11/2022</td>
+            <td>{{ participante.nomeParticipante }}</td>
+            <td>{{ participante.nomeFormacao }}</td>
+            <td>{{ participante.nomeTurma }}</td>
+            <td>
+              {{
+                participante.bolsaAux +
+                participante.beneficios +
+                participante.convenio +
+                participante.horaExtra +
+                participante.beneficioLegislacao +
+                participante.remuneracaoExporadica +
+                participante.remuneracaoExtra +
+                participante.alura
+              }}
+            </td>
+            <td>{{
+                participante.bolsaAux +
+                participante.beneficios +
+                participante.convenio +
+                participante.horaExtra +
+                participante.beneficioLegislacao +
+                participante.remuneracaoExporadica +
+                participante.remuneracaoExtra +
+                participante.alura
+              }}</td>
+            <td>{{ participante.dataFim }}</td>
           </tr>
         </tbody>
         <tfoot class="extremo">
@@ -303,7 +315,7 @@ export default {
 
       mensagem.style.display = "none";
       extremo.style.display = "flex";
-    }
+    },
   },
 };
 </script>
@@ -311,14 +323,6 @@ export default {
 <style>
 body {
   background: #ebebeb;
-}
-
-[id^="info-"] {
-  font-weight: 500; /*Seleciona todos os ID's que começam com "info-", ou o nome que você preferir*/
-}
-
-.tela {
-  background-color: #ebebeb;
 }
 
 #botaoFolha {
@@ -332,7 +336,7 @@ body {
   background: #ffb600;
   font-weight: bold;
   width: 180px;
-  margin-left: 10px;
+  margin-left: 30px;
   color: #ffffff;
 }
 
@@ -364,15 +368,16 @@ body {
 .mensagem {
   margin-top: 120px;
   color: #090b2e;
-  font-size: larger;
+  font-size: x-large;
   font-weight: bold;
   text-align: center;
 }
 
 .botaoConfirmar {
-  margin-left: 15px;
+  margin-left: 40px;
   background: #090b2e;
   color: white;
+  width: 160px;
 }
 
 .botaoOrdenar {
@@ -398,11 +403,13 @@ body {
   margin-top: 30px;
 }
 
-#info-nome,
-#info-turma,
-#info-programa,
-#info-salario {
+.table {
+  width: 95%;
+}
+
+.participantes {
   text-align: left;
+  font-weight: 500;
 }
 
 #modalinteiro {
@@ -513,11 +520,6 @@ body {
     width: 100%;
     margin-left: 0px;
     margin-top: 10px;
-  }
-
-  #formação,
-  #turmas {
-    width: auto;
   }
 
   #botaoSalarioPadrao {

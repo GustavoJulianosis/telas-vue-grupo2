@@ -62,9 +62,9 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>07/2021</th>
-            <th>08/2021</th>
-            <th>09/2021</th>
+            <th>R$ mês atual</th>
+            <th>R$ mês anterior</th>
+            <th>Data fim programa</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -73,12 +73,12 @@
             v-for="instrutor in instrutores"
             v-bind:key="instrutor"
           >
-            <td id="info-nome">{{ instrutor.nomeInstrutor }}</td>
-            <td id="info-programa">{{ instrutor.nomeFormacao }}</td>
-            <td id="info-turma">{{ instrutor.nomeTurma }}</td>
-            <div id="salarios" v-for="salario in salarios" v-bind:key="salario">
-              <th id="info-salario">R$ {{ salario.salarioFinal }}</th>
-            </div>
+            <td id="info-nome">asd</td>
+            <td id="info-programa">asd</td>
+            <td id="info-turma">sad</td>
+            <td>asd</td>
+            <td>asd</td>
+            <td>asd</td>
           </tr>
         </tbody>
         <tfoot class="extremo">
@@ -326,7 +326,7 @@ body {
   background: #ab0045;
   font-weight: bold;
   width: 180px;
-  margin-left: 10px;
+  margin-left: 30px;
   color: #ffffff;
 }
 
@@ -350,6 +350,10 @@ body {
   height: 38px;
 }
 
+.table {
+  width: 95%;
+}
+
 #botaoSelecionar {
   height: 38px;
   width: 60px;
@@ -363,13 +367,14 @@ body {
 .botaoConfirmar {
   background: #090b2e;
   color: white;
-  margin-left: 30px;
+  margin-left: 40px;
+  width: 160px;
 }
 
 .mensagem {
   margin-top: 120px;
   color: #090B2E;
-  font-size: larger;
+  font-size: x-large;
   font-weight: bold;
   text-align: center;
 }
@@ -499,10 +504,9 @@ body {
     margin-top: 10px;
   }
 
-  #formação,
-  #turmas {
-    width: auto;
-  }
+.turmas {
+  margin-left: 15px;
+}
 
   #botaoSalarioPadrao {
     width: max-content;
