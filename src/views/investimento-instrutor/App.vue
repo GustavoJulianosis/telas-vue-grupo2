@@ -62,8 +62,8 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>R$ mês atual</th>
             <th>R$ mês anterior</th>
+            <th>R$ mês atual</th>
             <th>Data fim programa</th>
           </tr>
         </thead>
@@ -72,13 +72,14 @@
             id="instrutores"
             v-for="instrutor in instrutores"
             v-bind:key="instrutor"
+            class="participantes"
           >
-            <td id="info-nome">asd</td>
-            <td id="info-programa">asd</td>
-            <td id="info-turma">sad</td>
-            <td>asd</td>
-            <td>asd</td>
-            <td>asd</td>
+            <td>{{ instrutor.nomeInstrutor }}</td>
+            <td>{{ instrutor.nomeFormacao }}</td>
+            <td>{{ instrutor.nomeTurma }}</td>
+            <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
+            <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
+            <td>{{ instrutor.dataFim }}</td>
           </tr>
         </tbody>
         <tfoot class="extremo">
@@ -88,33 +89,14 @@
           </tr>
         </tfoot>
       </table>
-      <div class="mensagem col-xl-12">Por favor, filtre os campos Formação e Turma para continuar</div>
-    </div>
-    <div class="col-xl-12">
-      <div class="aviso">
-        <h4 class="titulo fw-bold">
-          Não foi encontrado nenhum resultado com os parâmetros informados
-        </h4>
-        <button
-          class="recarregar mt-3 form-control"
-          onclick="window.location.reload()"
-        >
-          RECARREGAR LISTA
-        </button>
+      <div class="mensagem col-xl-12">
+        Por favor, filtre os campos Formação e Turma para continuar
       </div>
     </div>
     <div class="container overflow-hidden botoes">
-      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-        <div class="botõesfinais col-xl-5">
-          <div>
-            <button id="botaoSalarioPadrao" type="button" class="btn-lg">
-              ADICIONAR SALÁRIO PADRÃO
-            </button>
-          </div>
-        </div>
-        <div class="col-xl-2"></div>
-        <div class="botõesfinais col-xl-5">
+      <div class="teste row g-2 g-lg-3">
           <div
+            class="botãoFinal col-xl-7"
             onclick="acao()"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
@@ -123,7 +105,6 @@
               ADICIONAR MANUALMENTE
             </button>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -287,13 +268,13 @@ export default {
         .then((response) => (this.salarios = response.data)); //Apenas o salario
     },
 
-    mudaVisibilidade(){
-        let mensagem = document.querySelector(".mensagem");
-        let extremo = document.querySelector(".extremo");
-        
-        mensagem.style.display = "none";
-        extremo.style.display = "flex";
-      }
+    mudaVisibilidade() {
+      let mensagem = document.querySelector(".mensagem");
+      let extremo = document.querySelector(".extremo");
+
+      mensagem.style.display = "none";
+      extremo.style.display = "flex";
+    },
   },
 };
 </script>
@@ -342,7 +323,6 @@ body {
   background: #ffb700;
   font-weight: bold;
   color: #ffffff;
-  margin-left: 120px;
   border: none;
 }
 
@@ -373,7 +353,7 @@ body {
 
 .mensagem {
   margin-top: 120px;
-  color: #090B2E;
+  color: #090b2e;
   font-size: x-large;
   font-weight: bold;
   text-align: center;
@@ -383,11 +363,9 @@ body {
   margin-top: 30px;
 }
 
-#info-nome,
-#info-turma,
-#info-programa,
-#info-salario {
+.participantes {
   text-align: left;
+  font-weight: 500;
 }
 
 #modalinteiro {
@@ -405,16 +383,16 @@ body {
   height: 59vh;
 }
 
+.teste {
+  margin-left: none;
+}
+
 .scrollbar-primary {
   scrollbar-color: #f5f5f5;
 }
 
 .botao {
   padding-bottom: 2%;
-}
-
-.botoes {
-  margin-top: 100px;
 }
 
 #formação {
@@ -430,16 +408,6 @@ body {
 
 #botaoSelecionar:hover {
   background-color: steelblue;
-}
-
-.aviso {
-  display: none;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  margin-bottom: 400px;
 }
 
 .recarregar {
@@ -504,9 +472,9 @@ body {
     margin-top: 10px;
   }
 
-.turmas {
-  margin-left: 15px;
-}
+  .turmas {
+    margin-left: 15px;
+  }
 
   #botaoSalarioPadrao {
     width: max-content;
@@ -520,7 +488,7 @@ body {
 
 @media (max-width: 1200px) {
   .modalitens,
-  .botõesfinais {
+  .botãoFinal {
     width: auto;
   }
   .conteudodescrição {

@@ -62,8 +62,8 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>R$ mês atual</th>
             <th>R$ mês anterior</th>
+            <th>R$ mês atual</th>
             <th>Data fim programa</th>
           </tr>
         </thead>
@@ -84,7 +84,7 @@
                 participante.convenio +
                 participante.horaExtra +
                 participante.beneficioLegislacao +
-                participante.remuneracaoExporadica +
+                participante.remuneracaoEsporadica +
                 participante.remuneracaoExtra +
                 participante.alura
               }}
@@ -95,7 +95,7 @@
                 participante.convenio +
                 participante.horaExtra +
                 participante.beneficioLegislacao +
-                participante.remuneracaoExporadica +
+                participante.remuneracaoEsporadica +
                 participante.remuneracaoExtra +
                 participante.alura
               }}</td>
@@ -126,16 +126,8 @@
         </button>
       </div>
     </div>
-    <div class="container overflow-hidden botoes">
+    <div class="container overflow-hidden">
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-        <div class="botõesfinais col-xl-5">
-          <div>
-            <button id="botaoSalarioPadrao" type="button" class="btn-lg">
-              ADICIONAR SALÁRIO PADRÃO
-            </button>
-          </div>
-        </div>
-        <div class="col-xl-2"></div>
         <div class="botõesfinais col-xl-5">
           <div
             onclick="acao()"
@@ -171,9 +163,10 @@
             aria-label="Close"
           ></button>
         </div>
+        <form>
         <div class="container-fluid ms-2">
           <div class="modalBody" id="fontModal">
-            <label id="modalconteudo">Nome</label>
+            <label class="modalconteudo" id="nomeModal">Nome</label>
             <div class="input-group input-group-lg">
               <input
                 type="text"
@@ -182,10 +175,10 @@
                 aria-describedby="inputGroup-sizing-lg"
               />
             </div>
-            <label id="modalconteudo">Mês e ano</label>
+            <label class="modalconteudo" id="mesAnoModal">Mês e ano</label>
             <div class="input-group input-group-lg">
               <input
-                type="text"
+                type="date"
                 class="form-control"
                 placeholder="MM/YY"
                 aria-label="Sizing example input"
@@ -194,7 +187,7 @@
             </div>
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Remuneração</label>
+                <label class="modalconteudo">Remuneração</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -206,7 +199,7 @@
                 </div>
               </div>
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Encargos</label>
+                <label class="modalconteudo">Encargos</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -220,7 +213,7 @@
             </div>
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Benefícios</label>
+                <label class="modalconteudo">Benefícios</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
@@ -232,26 +225,12 @@
                 </div>
               </div>
               <div class="modalitens col-xl-6">
-                <label id="modalconteudo">Total</label>
+                <label class="modalconteudo">Total</label>
                 <div class="input-group input-group-lg">
                   <input
                     type="text"
                     class="form-control"
                     placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
-              <div class="conteudodescrição col-xl-12">
-                <label class="" id="modalconteudo"
-                  >Descrição do investimento</label
-                >
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Salário Padrão"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-lg"
                   />
@@ -273,6 +252,7 @@
             <div class="col-xl-5"></div>
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
@@ -293,6 +273,13 @@ export default {
       participantes: [],
       programaProcurado: "",
       turmaProcurada: "",
+      form:{
+        nome: "",
+        mesAno: "",
+        remuneracao: "",
+        encargos: "",
+        beneficios: ""
+      }
     };
   },
   methods: {
@@ -307,6 +294,16 @@ export default {
             this.turmaProcurada
         )
         .then((response) => (this.participantes = response.data)); //Apenas o conteúdo
+    },
+
+    inserirInvestimento(){
+      this.form.nome = document.querySelector("#nomeModal").value
+      this.form.mesAno = document.querySelector("#mesAnoModal").value
+      this.form.remuneracao = document.querySelector("#remuneracaoModal").value
+      this.form.encargos = document.querySelector("#encargosModal").value
+      this.form.beneficios = document.querySelector("#beneficiosModal").value
+      http.post("/investimento-folha").then(response => this.form)
+
     },
 
     mudaVisibilidade() {
@@ -352,7 +349,6 @@ body {
   background: #ffb700;
   font-weight: bold;
   color: #ffffff;
-  margin-left: 120px;
   border: none;
 }
 
@@ -431,10 +427,6 @@ body {
   padding-bottom: 2%;
 }
 
-.botoes {
-  margin-top: 100px;
-}
-
 #formação {
   width: 180px;
   margin-right: 23px;
@@ -477,7 +469,7 @@ body {
   width: 100%;
 }
 
-#modalconteudo {
+.modalconteudo {
   font-family: Montserrat;
   font-size: 20px;
   font-style: normal;
