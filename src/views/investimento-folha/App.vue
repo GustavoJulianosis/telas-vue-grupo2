@@ -89,7 +89,8 @@
                 participante.alura
               }}
             </td>
-            <td>{{
+            <td>
+              {{
                 participante.bolsaAux +
                 participante.beneficios +
                 participante.convenio +
@@ -98,7 +99,8 @@
                 participante.remuneracaoEsporadica +
                 participante.remuneracaoExtra +
                 participante.alura
-              }}</td>
+              }}
+            </td>
             <td>{{ participante.dataFim }}</td>
           </tr>
         </tbody>
@@ -113,28 +115,11 @@
         Por favor, filtre os campos Formação e Turma para continuar
       </div>
     </div>
-    <div class="col-xl-12">
-      <div class="aviso">
-        <h4 class="titulo fw-bold">
-          Não foi encontrado nenhum resultado com os parâmetros informados
-        </h4>
-        <button
-          class="recarregar mt-3 form-control"
-          onclick="window.location.reload()"
-        >
-          RECARREGAR LISTA
-        </button>
-      </div>
-    </div>
     <div class="container overflow-hidden">
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
         <div class="botõesfinais col-xl-5">
-          <div
-            onclick="acao()"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            <button id="botaoAdicionarManualmente" type="button" class="btn-lg">
+          <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button id="botaoAdicionarManualmente" type="button" class="btn-lg" v-on:click="mostrarParticipantes()">
               ADICIONAR MANUALMENTE
             </button>
           </div>
@@ -164,94 +149,112 @@
           ></button>
         </div>
         <form>
-        <div class="container-fluid ms-2">
-          <div class="modalBody" id="fontModal">
-            <label class="modalconteudo" id="nomeModal">Nome</label>
-            <div class="input-group input-group-lg">
-              <input
-                type="text"
-                class="form-control"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg"
-              />
+          <div class="container-fluid ms-2">
+            <div class="modalBody" id="fontModal">
+              <label class="modalconteudo">Nome</label>
+              <div class="input-group input-group-lg">
+                <select class="col-xl-5 nomeModal" id="nomeModal">
+                  <option
+                    :value="cpfParticipante.cpfParticipante"
+                    v-for="cpfParticipante in cpfParticipantes"
+                    :key="cpfParticipante.cpfParticipante"
+                  >{{ cpfParticipante.nomeCandidato }}</option>
+                </select>
+              </div>
+              <label class="modalconteudo">Mês e ano</label>
+              <div class="input-group input-group-lg">
+                <input
+                  id="mesAnoModal"
+                  type="date"
+                  class="form-control"
+                  placeholder="MM/YY"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+              </div>
+              <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="modalitens col-xl-6">
+                  <label class="modalconteudo">Remuneração</label>
+                  <div class="input-group input-group-lg">
+                    <input
+                      id="remuneracaoModal"
+                      type="text"
+                      class="form-control"
+                      placeholder="R$"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                    />
+                  </div>
+                </div>
+                <div class="modalitens col-xl-6">
+                  <label class="modalconteudo">Encargos</label>
+                  <div class="input-group input-group-lg">
+                    <input
+                      id="encargosModal"
+                      type="text"
+                      class="form-control"
+                      placeholder="R$"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="modalitens col-xl-6">
+                  <label class="modalconteudo">Benefícios</label>
+                  <div class="input-group input-group-lg">
+                    <input
+                      id="beneficiosModal"
+                      type="text"
+                      class="form-control"
+                      placeholder="R$"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                    />
+                  </div>
+                </div>
+                <div class="modalitens col-xl-6">
+                  <label class="modalconteudo">Total</label>
+                  <div class="input-group input-group-lg">
+                    <input disabled
+                      type="text"
+                      class="form-control"
+                      placeholder="R$"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                    />
+                  </div>
+                </div>
+                <div class="modalitens col-xl-12">
+                  <label class="modalconteudo">Descrição do Investimento</label>
+                  <div class="input-group input-group-lg">
+                    <input
+                      id="descricaoModal"
+                      type="text"
+                      class="form-control"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <label class="modalconteudo" id="mesAnoModal">Mês e ano</label>
-            <div class="input-group input-group-lg">
-              <input
-                type="date"
-                class="form-control"
-                placeholder="MM/YY"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg"
-              />
-            </div>
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-              <div class="modalitens col-xl-6">
-                <label class="modalconteudo">Remuneração</label>
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 modal-footer">
+              <div class="row-xl-5">
+                <button
+                  id="confirmar"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  v-on:click="inserirInvestimento()"
+                >
+                  CONFIRMAR
+                </button>
               </div>
-              <div class="modalitens col-xl-6">
-                <label class="modalconteudo">Encargos</label>
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-              <div class="modalitens col-xl-6">
-                <label class="modalconteudo">Benefícios</label>
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
-              <div class="modalitens col-xl-6">
-                <label class="modalconteudo">Total</label>
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="R$"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
+              <div class="col-xl-5"></div>
             </div>
           </div>
-          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 modal-footer">
-            <div class="row-xl-5">
-              <button
-                id="confirmar"
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                CONFIRMAR
-              </button>
-            </div>
-            <div class="col-xl-5"></div>
-          </div>
-        </div>
         </form>
       </div>
     </div>
@@ -266,21 +269,23 @@ import funcoes from "../../services/Funcoes";
 export default {
   name: "App",
   components: {
-    Header,
+    Header
   },
   data() {
     return {
       participantes: [],
+      cpfParticipantes: [],
       programaProcurado: "",
       turmaProcurada: "",
-      form:{
-        nome: "",
+      form: {
+        cpf: "",
         mesAno: "",
         remuneracao: "",
         encargos: "",
-        beneficios: ""
-      }
-    };
+        beneficios: "",
+        descricao: "",
+      },
+    }
   },
   methods: {
     filtrarDados() {
@@ -296,14 +301,26 @@ export default {
         .then((response) => (this.participantes = response.data)); //Apenas o conteúdo
     },
 
-    inserirInvestimento(){
-      this.form.nome = document.querySelector("#nomeModal").value
-      this.form.mesAno = document.querySelector("#mesAnoModal").value
-      this.form.remuneracao = document.querySelector("#remuneracaoModal").value
-      this.form.encargos = document.querySelector("#encargosModal").value
-      this.form.beneficios = document.querySelector("#beneficiosModal").value
-      http.post("/investimento-folha").then(response => this.form)
+    mostrarParticipantes() {
+      http
+        .get(
+          `investimento-folha/participantes/${this.programaProcurado}/${this.turmaProcurada}`
+        )
+        .then((response) => console.log(this.cpfParticipantes = response.data));
+    },
 
+    inserirInvestimento() {
+      this.form.cpf = document.getElementById("nomeModal").value;
+      this.form.mesAno = document.querySelector("#mesAnoModal").value;
+      this.form.remuneracao = document.querySelector("#remuneracaoModal").value;
+      this.form.encargos = document.querySelector("#encargosModal").value;
+      this.form.beneficios = document.querySelector("#beneficiosModal").value;
+      this.form.descricao = document.querySelector("#descricaoModal").value;
+      http
+        .post("/investimento-folha", this.form)
+        .then((response) => {
+          this.form;
+        })
     },
 
     mudaVisibilidade() {
@@ -312,8 +329,8 @@ export default {
 
       mensagem.style.display = "none";
       extremo.style.display = "flex";
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -410,6 +427,10 @@ body {
 
 #modalinteiro {
   background-color: #ebebeb;
+}
+
+.nomeModal {
+  height: 35px;
 }
 
 .my-custom-scrollbar {

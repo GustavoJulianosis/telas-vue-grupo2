@@ -75,7 +75,7 @@
             class="participantes"
           >
             <td>{{ instrutor.nomeInstrutor }}</td>
-            <td>{{ instrutor.nomeFormacao }}</td>
+            <td>{{ instrutor.nomePrograma }}</td>
             <td>{{ instrutor.nomeTurma }}</td>
             <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
             <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
@@ -95,16 +95,20 @@
     </div>
     <div class="container overflow-hidden botoes">
       <div class="teste row g-2 g-lg-3">
-          <div
-            class="botãoFinal col-xl-7"
-            onclick="acao()"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+        <div
+          class="botãoFinal col-xl-7"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          <button
+            id="botaoAdicionarManualmente"
+            type="button"
+            class="btn-lg"
+            v-on:click="mostrarInstrutor()"
           >
-            <button id="botaoAdicionarManualmente" type="button" class="btn-lg">
-              ADICIONAR MANUALMENTE
-            </button>
-          </div>
+            ADICIONAR MANUALMENTE
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -133,17 +137,20 @@
           <div class="modalBody" id="fontModal">
             <label id="modalconteudo">Nome</label>
             <div class="input-group input-group-lg">
-              <input
-                type="text"
-                class="form-control"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg"
-              />
+              <select class="col-xl-5 nomeModal" id="nomeModal">
+                <option
+                  :value="cpfInstrutor.cpfInstrutor"
+                  v-for="cpfInstrutor in cpfInstrutores"
+                  :key="cpfInstrutor.cpfInstrutor"
+                  >{{ cpfInstrutor.nomeInstrutor }}</option
+                >
+              </select>
             </div>
             <label id="modalconteudo">Mês e ano</label>
             <div class="input-group input-group-lg">
               <input
-                type="text"
+                id="mesAnoModal"
+                type="date"
                 class="form-control"
                 placeholder="MM/YY"
                 aria-label="Sizing example input"
@@ -155,6 +162,7 @@
                 <label id="modalconteudo">Valor Hora</label>
                 <div class="input-group input-group-lg">
                   <input
+                    id="valorHoraModal"
                     type="text"
                     class="form-control"
                     placeholder="R$"
@@ -167,6 +175,7 @@
                 <label id="modalconteudo">Horas trabalhadas</label>
                 <div class="input-group input-group-lg">
                   <input
+                    id="horasTrabalhadasModal"
                     type="text"
                     class="form-control"
                     placeholder="R$"
@@ -189,25 +198,12 @@
                   />
                 </div>
               </div>
-              <div class="conteudodescrição col-xl-12">
-                <label class="" id="modalconteudo"
-                  >Descrição do investimento</label
-                >
-                <div class="input-group input-group-lg">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Salário Padrão"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-lg"
-                  />
-                </div>
-              </div>
             </div>
           </div>
           <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 modal-footer">
             <div class="row-xl-5">
               <button
+                v-on:click="inserirInvestimento()"
                 id="confirmar"
                 type="button"
                 class="btn btn-secondary"
@@ -232,12 +228,21 @@ import funcoes from "../../services/Funcoes";
 export default {
   name: "App",
   components: {
-    Header,
+    Header
   },
   data() {
     return {
       instrutores: [],
+      cpfInstrutores: [],
+      programaProcurado: "",
+      turmaProcurada: "",
       salarios: [],
+      form: {
+        cpf: "",
+        mesAno: "",
+        valorHora: "",
+        horasTrabalhadas: ""
+      }
     };
   },
 
@@ -252,20 +257,27 @@ export default {
             "/" +
             this.turmaProcurada
         )
-        .then((response) => (this.instrutores = response.data)); //Apenas o nome, formação e turma
+        .then(response => (this.instrutores = response.data)); //Apenas o nome, formação e turma
     },
 
-    mostrarSalario() {
-      this.programaProcurado = document.querySelector(".filtro-programa").value;
-      this.turmaProcurada = document.querySelector(".filtro-turma").value;
+    inserirInvestimento() {
+      this.form.cpf = document.querySelector("#nomeModal").value;
+      this.form.mesAno = document.querySelector("#mesAnoModal").value;
+      this.form.valorHora = document.querySelector("#valorHoraModal").value;
+      this.form.horasTrabalhadas = document.querySelector(
+        "#horasTrabalhadasModal"
+      ).value;
+      http
+        .post("/instrutor", this.form)
+        .then(response => console.log(response.data));
+    },
+
+    mostrarInstrutor() {
       http
         .get(
-          "instrutor/buscar-salario/" +
-            this.programaProcurado +
-            "/" +
-            this.turmaProcurada
+          `instrutor/instrutores/${this.programaProcurado}/${this.turmaProcurada}`
         )
-        .then((response) => (this.salarios = response.data)); //Apenas o salario
+        .then(response => console.log((this.cpfInstrutores = response.data)));
     },
 
     mudaVisibilidade() {
@@ -274,8 +286,8 @@ export default {
 
       mensagem.style.display = "none";
       extremo.style.display = "flex";
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -370,6 +382,10 @@ body {
 
 #modalinteiro {
   background-color: #ebebeb;
+}
+
+.nomeModal {
+  height: 35px;
 }
 
 .my-custom-scrollbar {
