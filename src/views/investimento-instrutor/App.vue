@@ -137,7 +137,11 @@
           <div class="modalBody" id="fontModal">
             <label id="modalconteudo">Nome</label>
             <div class="input-group input-group-lg">
-              <select class="col-xl-5 nomeModal" id="nomeModal">
+              <select
+                class="form-select nomeModal"
+                aria-label="Default select example"
+                id="nomeModal"
+              >
                 <option
                   :value="cpfInstrutor.cpfInstrutor"
                   v-for="cpfInstrutor in cpfInstrutores"
@@ -162,8 +166,10 @@
                 <label id="modalconteudo">Valor Hora</label>
                 <div class="input-group input-group-lg">
                   <input
+                    v-model="form.valorHora"
+                    @input="escutaQuantidades"
                     id="valorHoraModal"
-                    type="text"
+                    type="number"
                     class="form-control"
                     placeholder="R$"
                     aria-label="Sizing example input"
@@ -175,10 +181,11 @@
                 <label id="modalconteudo">Horas trabalhadas</label>
                 <div class="input-group input-group-lg">
                   <input
+                    v-model="form.horasTrabalhadas"
+                    @input="escutaQuantidades"
                     id="horasTrabalhadasModal"
-                    type="text"
+                    type="number"
                     class="form-control"
-                    placeholder="R$"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-lg"
                   />
@@ -190,7 +197,11 @@
                 <label id="modalconteudo">Valor Total</label>
                 <div class="input-group input-group-lg">
                   <input
-                    type="text"
+                    id="inputQtdTotal"
+                    readonly
+                    v-model="form.qtdTotal"
+                    disabled
+                    type="number"
                     class="form-control"
                     placeholder="R$"
                     aria-label="Sizing example input"
@@ -242,6 +253,9 @@ export default {
         mesAno: "",
         valorHora: "",
         horasTrabalhadas: ""
+      },
+      qtdTotal: {
+        qtdTotal: ""
       }
     };
   },
@@ -268,8 +282,32 @@ export default {
         "#horasTrabalhadasModal"
       ).value;
       http
-        .post("/instrutor", this.form)
+        .post("/instrutor/salvar-invest", this.form) //mudar a url, por causa da junção com juliano
         .then(response => console.log(response.data));
+    },
+
+    escutaQuantidades() {
+      let valorHora = document.querySelector("#valorHoraModal").value;
+      let quantidadeHora = document.querySelector("#horasTrabalhadasModal")
+        .value;
+      this.carregaQuantidade(valorHora, quantidadeHora);
+    },
+
+    carregaQuantidade(valor, quantidade) {
+      valor = parseInt(valor);
+      quantidade = parseInt(quantidade);
+
+      if (isNaN(valor)) {
+        valor = 0;
+      }
+      if (isNaN(quantidade)) {
+        quantidade = 0;
+      }
+
+      let qtdTotal = 0;
+      qtdTotal = valor * quantidade;
+      let elQtdTotal = document.querySelector("#inputQtdTotal");
+      elQtdTotal.value = qtdTotal;
     },
 
     mostrarInstrutor() {
@@ -385,7 +423,7 @@ body {
 }
 
 .nomeModal {
-  height: 35px;
+  height: 55px;
 }
 
 .my-custom-scrollbar {

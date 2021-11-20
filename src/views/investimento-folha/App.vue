@@ -80,25 +80,25 @@
             <td>
               {{
                 participante.bolsaAux +
-                participante.beneficios +
-                participante.convenio +
-                participante.horaExtra +
-                participante.beneficioLegislacao +
-                participante.remuneracaoEsporadica +
-                participante.remuneracaoExtra +
-                participante.alura
+                  participante.beneficios +
+                  participante.convenio +
+                  participante.horaExtra +
+                  participante.beneficioLegislacao +
+                  participante.remuneracaoEsporadica +
+                  participante.remuneracaoExtra +
+                  participante.alura
               }}
             </td>
             <td>
               {{
                 participante.bolsaAux +
-                participante.beneficios +
-                participante.convenio +
-                participante.horaExtra +
-                participante.beneficioLegislacao +
-                participante.remuneracaoEsporadica +
-                participante.remuneracaoExtra +
-                participante.alura
+                  participante.beneficios +
+                  participante.convenio +
+                  participante.horaExtra +
+                  participante.beneficioLegislacao +
+                  participante.remuneracaoEsporadica +
+                  participante.remuneracaoExtra +
+                  participante.alura
               }}
             </td>
             <td>{{ participante.dataFim }}</td>
@@ -119,7 +119,12 @@
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
         <div class="botõesfinais col-xl-5">
           <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <button id="botaoAdicionarManualmente" type="button" class="btn-lg" v-on:click="mostrarParticipantes()">
+            <button
+              id="botaoAdicionarManualmente"
+              type="button"
+              class="btn-lg"
+              v-on:click="mostrarParticipantes()"
+            >
               ADICIONAR MANUALMENTE
             </button>
           </div>
@@ -153,12 +158,17 @@
             <div class="modalBody" id="fontModal">
               <label class="modalconteudo">Nome</label>
               <div class="input-group input-group-lg">
-                <select class="col-xl-5 nomeModal" id="nomeModal">
+                <select
+                  class="form-select nomeModal"
+                  aria-label="Default select example"
+                  id="nomeModal"
+                >
                   <option
                     :value="cpfParticipante.cpfParticipante"
                     v-for="cpfParticipante in cpfParticipantes"
                     :key="cpfParticipante.cpfParticipante"
-                  >{{ cpfParticipante.nomeCandidato }}</option>
+                    >{{ cpfParticipante.nomeCandidato }}</option
+                  >
                 </select>
               </div>
               <label class="modalconteudo">Mês e ano</label>
@@ -177,8 +187,10 @@
                   <label class="modalconteudo">Remuneração</label>
                   <div class="input-group input-group-lg">
                     <input
+                      v-model="form.remuneracao"
+                      @input="escutaQuantidades"
                       id="remuneracaoModal"
-                      type="text"
+                      type="number"
                       class="form-control"
                       placeholder="R$"
                       aria-label="Sizing example input"
@@ -190,8 +202,10 @@
                   <label class="modalconteudo">Encargos</label>
                   <div class="input-group input-group-lg">
                     <input
+                      v-model="form.encargos"
+                      @input="escutaQuantidades"
                       id="encargosModal"
-                      type="text"
+                      type="number"
                       class="form-control"
                       placeholder="R$"
                       aria-label="Sizing example input"
@@ -206,7 +220,9 @@
                   <div class="input-group input-group-lg">
                     <input
                       id="beneficiosModal"
-                      type="text"
+                      v-model="form.beneficios"
+                      @input="escutaQuantidades"
+                      type="number"
                       class="form-control"
                       placeholder="R$"
                       aria-label="Sizing example input"
@@ -217,8 +233,12 @@
                 <div class="modalitens col-xl-6">
                   <label class="modalconteudo">Total</label>
                   <div class="input-group input-group-lg">
-                    <input disabled
-                      type="text"
+                    <input
+                      id="inputQtdTotal"
+                      readonly
+                      v-model="form.qtdTotal"
+                      disabled
+                      type="number"
                       class="form-control"
                       placeholder="R$"
                       aria-label="Sizing example input"
@@ -283,9 +303,12 @@ export default {
         remuneracao: "",
         encargos: "",
         beneficios: "",
-        descricao: "",
+        descricao: ""
       },
-    }
+      qtdTotal: {
+        qtdTotal: ""
+      }
+    };
   },
   methods: {
     filtrarDados() {
@@ -298,7 +321,7 @@ export default {
             "/" +
             this.turmaProcurada
         )
-        .then((response) => (this.participantes = response.data)); //Apenas o conteúdo
+        .then(response => (this.participantes = response.data)); //Apenas o conteúdo
     },
 
     mostrarParticipantes() {
@@ -306,7 +329,7 @@ export default {
         .get(
           `investimento-folha/participantes/${this.programaProcurado}/${this.turmaProcurada}`
         )
-        .then((response) => console.log(this.cpfParticipantes = response.data));
+        .then(response => console.log((this.cpfParticipantes = response.data)));
     },
 
     inserirInvestimento() {
@@ -316,11 +339,36 @@ export default {
       this.form.encargos = document.querySelector("#encargosModal").value;
       this.form.beneficios = document.querySelector("#beneficiosModal").value;
       this.form.descricao = document.querySelector("#descricaoModal").value;
-      http
-        .post("/investimento-folha", this.form)
-        .then((response) => {
-          this.form;
-        })
+      http.post("/investimento-folha", this.form).then(response => {
+        this.form;
+      });
+    },
+
+    escutaQuantidades() {
+      let remuneracao = document.querySelector("#remuneracaoModal").value;
+      let encargos = document.querySelector("#encargosModal").value;
+      let beneficios = document.querySelector("#beneficiosModal").value;
+      this.carregaQuantidade(remuneracao, encargos, beneficios);
+    },
+
+    carregaQuantidade(remun, encarg, benef) {
+      remun = parseInt(remun);
+      encarg = parseInt(encarg);
+      benef = parseInt(benef);
+
+      if (isNaN(remun)) {
+        remun = 0;
+      }
+      if (isNaN(encarg)) {
+        encarg = 0;
+      }
+      if (isNaN(benef)) {
+        benef = 0;
+      }
+      let qtdTotal = 0;
+      qtdTotal += remun + encarg + benef;
+      let elQtdTotal = document.querySelector("#inputQtdTotal");
+      elQtdTotal.value = qtdTotal;
     },
 
     mudaVisibilidade() {
@@ -430,7 +478,7 @@ body {
 }
 
 .nomeModal {
-  height: 35px;
+  height: 55px;
 }
 
 .my-custom-scrollbar {
