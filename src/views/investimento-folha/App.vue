@@ -187,7 +187,6 @@
                   <label class="modalconteudo">Remuneração</label>
                   <div class="input-group input-group-lg">
                     <input
-                      v-model="form.remuneracao"
                       @input="escutaQuantidades"
                       id="remuneracaoModal"
                       type="number"
@@ -202,7 +201,6 @@
                   <label class="modalconteudo">Encargos</label>
                   <div class="input-group input-group-lg">
                     <input
-                      v-model="form.encargos"
                       @input="escutaQuantidades"
                       id="encargosModal"
                       type="number"
@@ -220,7 +218,6 @@
                   <div class="input-group input-group-lg">
                     <input
                       id="beneficiosModal"
-                      v-model="form.beneficios"
                       @input="escutaQuantidades"
                       type="number"
                       class="form-control"
@@ -235,8 +232,6 @@
                   <div class="input-group input-group-lg">
                     <input
                       id="inputQtdTotal"
-                      readonly
-                      v-model="form.qtdTotal"
                       disabled
                       type="number"
                       class="form-control"
@@ -307,6 +302,9 @@ export default {
       },
       qtdTotal: {
         qtdTotal: ""
+      },
+      qtdSalario: {
+        qtdSalario: ""
       }
     };
   },
@@ -329,7 +327,7 @@ export default {
         .get(
           `investimento-folha/participantes/${this.programaProcurado}/${this.turmaProcurada}`
         )
-        .then(response => console.log((this.cpfParticipantes = response.data)));
+        .then(response => (this.cpfParticipantes = response.data));
     },
 
     inserirInvestimento() {
