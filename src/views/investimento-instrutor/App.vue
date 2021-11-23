@@ -62,8 +62,8 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>R$ mês anterior</th>
-            <th>R$ mês atual</th>
+            <th>Salario investido</th>
+            <th>Data lançamento</th>
             <th>Data fim programa</th>
           </tr>
         </thead>
@@ -78,7 +78,7 @@
             <td>{{ instrutor.nomePrograma }}</td>
             <td>{{ instrutor.nomeTurma }}</td>
             <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
-            <td>{{ instrutor.qtdHora * instrutor.vlrHora }}</td>
+            <td>{{ instrutor.dataLancamento }}</td>
             <td>{{ instrutor.dataFim }}</td>
           </tr>
         </tbody>

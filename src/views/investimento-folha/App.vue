@@ -62,8 +62,8 @@
             <th>Nome</th>
             <th>Formação</th>
             <th>Turma</th>
-            <th>R$ mês anterior</th>
-            <th>R$ mês atual</th>
+            <th>Salario investido</th>
+            <th>Data início programa</th>
             <th>Data fim programa</th>
           </tr>
         </thead>
@@ -77,7 +77,7 @@
             <td>{{ participante.nomeParticipante }}</td>
             <td>{{ participante.nomeFormacao }}</td>
             <td>{{ participante.nomeTurma }}</td>
-            <td>
+            <td>R$
               {{
                 participante.bolsaAux +
                   participante.beneficios +
@@ -89,18 +89,7 @@
                   participante.alura
               }}
             </td>
-            <td>
-              {{
-                participante.bolsaAux +
-                  participante.beneficios +
-                  participante.convenio +
-                  participante.horaExtra +
-                  participante.beneficioLegislacao +
-                  participante.remuneracaoEsporadica +
-                  participante.remuneracaoExtra +
-                  participante.alura
-              }}
-            </td>
+            <td>{{ participante.dataInicio }}</td>
             <td>{{ participante.dataFim }}</td>
           </tr>
         </tbody>
